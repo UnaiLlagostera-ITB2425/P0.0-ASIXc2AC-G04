@@ -4,17 +4,21 @@
 
 - [Tarea 1: Organización del equipo y preparación inicial](sprint1/tarea1.md)
 - [Tarea 2: Diseño de la arquitectura y topología de red](sprint1/tarea2.md)
-- [Tarea 3: Despliegue y configuración del servidor Router/DHCP](sprint1/tarea3.md)
-- [Tarea 4: Documentación inicial](sprint1/tarea4.md)
+- [Tarea 3: Despliegue del servidor Router/DHCP](sprint1/tarea3.md)
+- [Tarea 4: Despliegue del servidor DNS](sprint1/tarea4.md)
+- [Tarea 5: Despliegue del servidor Web](sprint1/tarea5.md)
+- [Tarea 6: Despliegue del servidor FTP](sprint1/tarea6.md)
+- [Tarea 7: Documentación inicial](sprint1/tarea7.md)
 
 ## Sprint 2
 
-- [Tarea 1: Despliegue y configuración del servidor DNS](sprint2/tarea1.md)
+- [Tarea 1: Despliegue del servidor DNS](sprint2/tarea1.md)
 - [Tarea 2: Configuración del servidor Base de Datos](sprint2/tarea2.md)
-- [Tarea 3: Despliegue y configuración del servidor Web](sprint2/tarea3.md)
-- [Tarea 4: Pruebas preliminares de servicios](sprint2/tarea4.md)
-- [Tarea 5: Documentación intermedia](sprint2/tarea5.md)
-- [Tarea 6: Despliegue y configuración del servidor FTP](sprint2/tarea6.md)
+- [Tarea 3: Configuración del servidor Web](sprint2/tarea3.md)
+- [Tarea 4: Configuración del servidor FTP](sprint2/tarea4.md)
+- [Tarea 5: Despliegue del servidor Router/DHCP](sprint2/tarea5.md)
+- [Tarea 6: Pruebas preliminares de servicios](sprint2/tarea6.md)
+- [Tarea 7: Documentación intermedia](sprint2/tarea7.md)
 
 ## Sprint 3
 
