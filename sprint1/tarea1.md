@@ -2,11 +2,9 @@
 
 ## Objetivo
 
-Establecer la organización del grupo de trabajo y preparar el espacio común del proyecto utilizando GitHub y ProofHub, donde todo el equipo podrá colaborar y compartir archivos y documentación.
+Establecer la organización del grupo de trabajo y preparar el espacio común del proyecto utilizando GitHub y ProofHub, donde todo el equipo podrá compartir archivos y documentación.
 
 ---
-
-## Pasos a seguir
 
 ### 1. Reunión inicial
 
@@ -18,18 +16,18 @@ Establecer la organización del grupo de trabajo y preparar el espacio común de
 
 ### 2. Creación del repositorio en GitHub
 
-- El coordinador accede a [GitHub](https://github.com/) y pulsa en “Create a new repository”.
+- Accedemos a [GitHub](https://github.com/) y pulsamos en “Create a new repository”.
 - Para el nombre del repositorio, usa el formato del proyecto:  
   `P0.0-ASIXc2AC-G04`
 
 ![Crear repositorio](/media/create_github.png)
 
-- Elige “Public” si todos pueden ver la repo, “Private” si solo el equipo y el profesor.
-- Añade una pequeña descripción como “Proyecto de administración de sistemas - Grupo 04”.
+- Elige “Public” si todos pueden ver la repo, “Private” si solo el equipo.
+> **Opcional:** Añade una pequeña descripción como “Proyecto de administración de sistemas - Grupo 04”.
 
 **Añadir colaboradores**
 
-- En la pestaña de “Settings” → “Collaborators”, el coordinador puede invitar al resto del grupo.
+- En la pestaña de “Settings” → “Collaborators”, podemos invitar al resto del grupo.
 - Cada miembro debe aceptar la invitación para poder subir y modificar archivos.
 
 ![Configuración de colaboradores](/media/colab_github.png)
@@ -51,14 +49,6 @@ Establecer la organización del grupo de trabajo y preparar el espacio común de
 - El equipo debe actualizar el progreso frecuentemente para mantener la sincronía.
 
 ![Backlog](/media/backlog.png)
-
----
-
-## Consejos básicos para usar GitHub
-
-- Para subir cambios, cada uno debe “clonar” la repo en su ordenador y trabajar en ella.
-- Usad “commit” para guardar cambios y “push” para enviar los cambios al repositorio online.
-- Revisad el historial de cambios (“History”) para saber quién ha modificado cada cosa.
 
 ---
 
