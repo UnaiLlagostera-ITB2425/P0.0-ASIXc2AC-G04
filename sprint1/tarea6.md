@@ -7,7 +7,7 @@ Comando utilizado: **sudo apt install vsftpd**
 
 Esto instala el servidor FTP junto con las dependencias necesarias, como muestra la siguiente evidencia:
 
-![Instalación vsftpd](../media/cano_instalacionFTP.jpg)
+![Instalación vsftpd](../media/cano_instalacionFTP.png)
 
 ## Inicio y habilitación del servicio
 
@@ -16,7 +16,7 @@ Una vez instalado, se procedió a iniciar el servicio y habilitarlo para que arr
 Esta acción asegura que el servidor FTP esté siempre disponible tras un reinicio del sistema.  
 Evidencia del proceso:
 
-![Inicio y enable de vsftpd](../media/cano_correrFTP.jpg)
+![Inicio y enable de vsftpd](../media/cano_correrFTP.png)
 
 ## Comprobación del estado del servicio
 
@@ -24,11 +24,12 @@ Para verificar que el servidor FTP se encuentra en ejecución y preparado para a
 
 El resultado mostró que el servicio está activo y funcionando correctamente, como se evidencia aquí:
 
-![Estado vsftpd activo](../media/cano_statusFTP.jpg)
+![Estado vsftpd activo](../media/cano_statusFTP.png)
 
 ## Estado actual
 
 - El servidor FTP `vsftpd` está correctamente instalado y en ejecución en F-N04.
 - El despliegue se ha realizado sin errores y el servicio está habilitado en el arranque automático.
 - Pendiente: Configuración detallada del servicio y pruebas de acceso.
+
 
