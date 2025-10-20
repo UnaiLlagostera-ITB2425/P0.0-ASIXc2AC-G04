@@ -1,5 +1,5 @@
-
-## 2. Instalación y configuración del servidor MySQL remoto (192.168.140.10)
+# Tarea 3: Configuración del servidor Web
+## Instalación y configuración del servidor MySQL remoto (192.168.140.10)
 
 Si MySQL no está instalado, instálalo con:
 
