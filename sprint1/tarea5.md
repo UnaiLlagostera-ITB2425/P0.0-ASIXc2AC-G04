@@ -22,7 +22,7 @@ El hardware utilizado fue preparado mediante isard con las siguientes caracterí
 
 **Ip del Servidor Web (Apache + PHP):** 192.168.40.10/24
 
-**Netplan**
+> Netplan:
 ```bash
 network:
   ethernets:
