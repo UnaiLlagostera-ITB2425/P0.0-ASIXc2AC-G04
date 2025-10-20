@@ -1,7 +1,18 @@
 # Tarea 5: Despliegue del servidor Web
 ---
 
-## Información del hardware
+## Información del hardwarenetwork:
+  ethernets:
+    enp1s0:
+      dhcp4: true
+    enp2s0:
+      dhcp4: false
+      addresses: [192.168.40.10/24]
+    enp3s0:
+      dhcp4: false
+      addresses: [192.168.140.10/24]
+  version: 2
+
 
 El hardware utilizado fue preparado mediante isard con las siguientes características:
 
@@ -10,7 +21,8 @@ El hardware utilizado fue preparado mediante isard con las siguientes caracterí
 ![Hardware2](/media/hard_web2.png)
 
 **Ip del Servidor Web (Apache + PHP):** 192.168.40.10/24
-Netplan
+
+**Netplan**
 ```bash
 network:
   ethernets:
