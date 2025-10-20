@@ -1,65 +1,24 @@
 # Tarea 3: Configuración del servidor Web
-## Instalación y configuración del servidor MySQL remoto (192.168.140.10)
 
-Si MySQL no está instalado, instálalo con:
+## Configuración para conexión remota con la BBDD (192.168.140.20)
 
-```bash
-sudo apt install mysql-server -y
-```
-
-Para permitir conexiones remotas, edita el archivo de configuración:
-
-```bash
-sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
-```
-
-Busca la línea:
-
-```
-bind-address = 127.0.0.1
-```
-
-y cámbiala a:
-
-```
-bind-address = 0.0.0.0
-```
-
-Luego reinicia MySQL:
-
-```bash
-sudo systemctl restart mysql
-```
-
-Crea un usuario remoto para la conexión desde el servidor web y otórgale permisos. En la consola MySQL:
-
-```sql
-CREATE USER 'bchecker'@'192.168.40.10' IDENTIFIED BY 'bchecker121';
-GRANT ALL PRIVILEGES ON *.* TO 'bchecker'@'192.168.40.10';
-FLUSH PRIVILEGES;
-```
-
-
-***
-
-## 3. Estructura de la aplicación PHP y archivos principales
+### Estructura de la aplicación PHP y archivos principales
 
 El código fuente se ubicará en `/var/www/html/` en el servidor web.
 
 Archivos principales de la aplicación:
 
 ```
-index.php
-add.php
-edit.php
-delete.php
+x.php
+x.php
+x.php
+x.php
 db.php
 ```
 
-
 ***
 
-## 4. Archivo `db.php` para conexión a la base de datos MySQL
+## X. Archivo `db.php` para conexión a la base de datos MySQL
 
 ```php
 <?php
@@ -76,7 +35,11 @@ if ($conn->connect_error) {
 ?>
 ```
 
-
+---
+---
+---
+---
+---
 ***
 
 ## 5. Archivo `index.php` para mostrar lista de usuarios y formulario para añadir
