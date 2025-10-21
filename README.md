@@ -19,7 +19,7 @@
 - [Tarea 4: Configuración del servidor FTP](sprint2/tarea4.md)
 - [Tarea 5: Despliegue del servidor Router/DHCP](sprint2/tarea5.md)
 - [Tarea 6: Pruebas preliminares de servicios](sprint2/tarea6.md)
-- [Tarea 7: Documentación intermedia](sprint2/tarea7.md)
+- Tarea 7: Documentación intermedia
 
 ## Sprint 3
 
