@@ -1,4 +1,6 @@
-# Tarea 1: Organización del equipo y preparación inicial
+<div style="text-align: center;">
+  <h1>Organización del equipo y preparación inicial</h1>
+</div>
 
 ## Objetivo
 
@@ -20,7 +22,9 @@ Establecer la organización del grupo de trabajo y preparar el espacio común de
 - Para el nombre del repositorio, usa el formato del proyecto:  
   `P0.0-ASIXc2AC-G04`
 
-![Crear repositorio](/media/create_github.png)
+<div align="center">
+  <img src="/media/create_github.png" alt="Crear repositorio">
+</div>
 
 - Elige “Public” si todos pueden ver la repo, “Private” si solo el equipo.
 > **Opcional:** Añade una pequeña descripción como “Proyecto de administración de sistemas - Grupo 04”.
