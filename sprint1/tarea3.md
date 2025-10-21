@@ -83,3 +83,62 @@ network:
       addresses:
         - 192.168.20.1/24            # Red clientes
 ```
+
+Aplicar los cambios:
+
+```bash
+sudo netplan apply
+```
+
+Verificar las direcciones asignadas:
+
+```bash
+ip addr show
+```
+---
+
+### 3.4 Prueba de conectividad
+
+- **Hacia Internet**:
+```bash
+ping -c 4 8.8.8.8
+```
+
+- **Entre redes locales** (si hay otra máquina conectada a la LAN):
+```bash
+ping -c 4 192.168.40.X
+```
+
+---
+
+## 4. Habilitar el reenvío de paquetes (Routing)
+
+Para que el router pueda reenviar tráfico entre sus interfaces, habilita el **IP forwarding**.
+
+Editar `/etc/sysctl.conf` y descomentar o añadir la siguiente línea:
+
+```bash
+net.ipv4.ip_forward=1
+```
+
+Aplicar los cambios sin necesidad de reiniciar:
+
+```bash
+sudo sysctl -p
+```
+
+Verificar que el reenvío esté habilitado:
+```bash
+cat /proc/sys/net/ipv4/ip_forward
+```
+
+(La salida debe ser `1`).
+
+---
+
+## 5. Configuración básica de firewall
+
+El firewall debe permitir el tráfico de reenvío y administración del router.
+
+### 5.1 Instalación de UFW (Firewall sencillo)
+
