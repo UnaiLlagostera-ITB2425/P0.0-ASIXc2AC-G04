@@ -1,4 +1,6 @@
-# Informe de Diseño de Infraestructura de Red (Con Servidor Linux)
+<div style="text-align: center;">
+  <h1>Informe de Diseño de Infraestructura de Red (Con Servidor Linux)</h1>
+</div>
 
 ## 1. Resumen General
 Se desplegará una infraestructura con un total de 4 servidores que cumplirán múltiples funciones para soportar los servicios de la organización. La red está dividida en dos subredes principales para mejorar la seguridad y el rendimiento:
@@ -31,7 +33,9 @@ Se desplegará una infraestructura con un total de 4 servidores que cumplirán m
 - Las IPs pueden ser asignadas por DHCP desde el router R-N04.
 - Comunicaciones hacia servidores reguladas por reglas de firewall y NAT en el router.
 
-<div align="center">![Diseno de Red](/media/diseno_red.png)</div>
+<div align="center">
+  <img src="/media/diseno_red.png" alt="Diseno de Red">
+</div>
 
 ---
 

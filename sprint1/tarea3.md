@@ -35,3 +35,5 @@ El objetivo del procedimiento es preparar una máquina con **Ubuntu Server** par
 
 Antes de iniciar cualquier configuración, actualiza los paquetes del sistema:
 
+//bash
+sudo apt update && sudo apt upgrade -y
