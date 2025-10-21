@@ -9,7 +9,7 @@ El código fuente se ubicará en `/var/www/html/` en el servidor web.
 Archivos principales de la aplicación:
 
 ```
-x.php
+index.html
 x.php
 x.php
 x.php
@@ -19,6 +19,8 @@ db.php
 ***
 
 ## X. Archivo `db.php` para conexión a la base de datos MySQL
+
+**Propósito:** Este archivo establece la conexión entre PHP y MySQL usando MySQLi, manejando credenciales y verificando errores para garantizar comunicación estable con la base de datos.
 
 ```php
 <?php
