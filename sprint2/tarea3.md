@@ -20,7 +20,7 @@ db.php
 
 ## X. Archivo `db.php` para conexión a la base de datos MySQL
 
-**Propósito:** Este archivo establece la conexión entre PHP y MySQL usando MySQLi, manejando credenciales y verificando errores para garantizar comunicación estable con la base de datos.
+Este archivo establece la conexión entre PHP y MySQL usando MySQLi, manejando credenciales y verificando errores para garantizar comunicación estable con la base de datos.
 
 ```php
 <?php
