@@ -9,7 +9,7 @@
 - [Tarea 5: Despliegue del servidor Web](sprint1/tarea5.md)
 - [Tarea 6: Despliegue del servidor FTP](sprint1/tarea6.md)
 - [Tarea 7: Despliegue del servidor BBDD](sprint1/tarea7.md)
-- [Tarea 8: Documentación inicial]
+- Tarea 8: Documentación inicial
 
 ## Sprint 2
 
