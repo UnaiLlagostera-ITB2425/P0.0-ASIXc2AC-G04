@@ -11,9 +11,20 @@ Esto instala el servidor MySQL y todas las dependencias necesarias sobre el sist
 
 ![Instalación MySQL Server](../media/cano_instalacion_MYSQL.png)
 
+## Comprobación del estado del servicio
+
+Una vez finalizada la instalación, se ha verificado que el servicio MySQL esté en ejecución y operativo utilizando:
+```sql
+sudo systemctl status mysql
+```
+La comprobación muestra que el servidor está activo y listo para aceptar conexiones:
+
+![Estado MySQL activo](../media/cano_statusBD.jpg)
+
 ## Estado actual
 
 - El servidor MySQL está correctamente instalado en el equipo B-N04.
 - No se han realizado todavía tareas de configuración, creación de usuarios o bases de datos.
 - El servicio está listo para proceder con la configuración de acceso remoto y preparación de las bases de datos y usuarios según los requisitos de los siguientes sprints.
+
 
