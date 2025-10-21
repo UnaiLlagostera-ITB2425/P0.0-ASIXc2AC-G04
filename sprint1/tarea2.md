@@ -31,7 +31,7 @@ Se desplegará una infraestructura con un total de 4 servidores que cumplirán m
 - Las IPs pueden ser asignadas por DHCP desde el router R-N04.
 - Comunicaciones hacia servidores reguladas por reglas de firewall y NAT en el router.
 
-![Diseno de Red](media/diseño_red.png)
+![Diseno de Red](media/diseno_red.png)
 
 ---
 
