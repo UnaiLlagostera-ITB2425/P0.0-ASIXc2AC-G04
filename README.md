@@ -29,4 +29,6 @@
 - [Tarea 4: Documentación final y entrega](sprint3/tarea4.md)
 
 ---
-Tots els sistemes (i aplicacions que es muntin) han de tenir un usuari bchecker/Pw:bchecker121 que ha de permetre accedir als equips.
+> Todos los sistemas (y aplicaciones que se monten) han de tener un usuario bchecker/Pw:bchecker121 que se ha de permitir acceder a los equipos.
+
+> Si la tarea no está linkeada es debido a que hemos decidido que no se ha de documentar o no és relevante.
