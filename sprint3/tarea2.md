@@ -168,3 +168,5 @@ sudo systemctl restart mysql
 ```
 
 **Propósito**: Aplica la configuración del `bind-address`
+
+![web_ddbb](/media/comprovació_DDBB_web.png)
