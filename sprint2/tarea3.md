@@ -1,50 +1,21 @@
 # Tarea 3: Configuración del servidor Web
 
-## Configuración para conexión remota con la BBDD (192.168.140.20)
-
-### Estructura de la aplicación PHP y archivos principales
+## Estructura de la aplicación PHP y archivos principales
 
 El código fuente se ubicará en `/var/www/html/` en el servidor web.
 
 Archivos principales de la aplicación:
 
 ```
-index.html
-x.php
-x.php
-x.php
-db.php
+index.php
+db.php #Fichero futuro para conexión con BBDD
 ```
 
-***
+> ❓ El index está pensado i preparado para poder mostrar la BBDD cuando se tenga conexión con esta, grácias a que previamente hemos podido visualizar als tablas que se van a tener que mostrar.
 
-## X. Archivo `db.php` para conexión a la base de datos MySQL
+## Documentación del Archivo index.php
 
-Este archivo establece la conexión entre PHP y MySQL usando MySQLi, manejando credenciales y verificando errores para garantizar comunicación estable con la base de datos.
-
-```php
-<?php
-$host = '192.168.140.10';
-$user = 'bchecker';
-$pass = 'bchecker121';
-$db   = 'crud_php';
-
-$conn = new mysqli($host, $user, $pass, $db);
-
-if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
-}
-?>
-```
-
----
----
----
----
----
-***
-
-## 5. Archivo `index.php` para mostrar lista de usuarios y formulario para añadir
+### Código Completo
 
 ```php
 <?php
@@ -57,193 +28,193 @@ include 'db.php';
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>CRUD mínimo</title>
+  <meta charset="UTF-8">
+  <title>Grupo 04 – Infraestructura Multicapa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="owl.carousel.min.css">
+  <link rel="stylesheet" href="owl.theme.default.min.css">
+  <link rel="stylesheet" href="themify-icons.css">
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; padding:0; }
+    header { background:#2c3e50; color:#ecf0f1; padding:1rem; text-align:center; }
+    section { padding:2rem; }
+    footer { background:#34495e; color:#ecf0f1; text-align:center; padding:1rem; }
+    .table-container { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th { background: #2c3e50; color: #ecf0f1; padding: 0.75rem; text-align: left; font-size: 0.9rem; }
+    td { padding: 0.75rem; border-bottom: 1px solid #ddd; font-size: 0.85rem; }
+    tr:hover { background: #f5f5f5; }
+    .no-data { text-align: center; padding: 2rem; color: #7f8c8d; font-style: italic; }
+  </style>
 </head>
 <body>
-    <h1>Lista de usuarios</h1>
-    <table border="1">
-        <tr><th>ID</th><th>Nombre</th><th>Email</th><th>Acciones</th></tr>
-        <?php
-        $result = $conn->query("SELECT * FROM users");
-        while ($row = $result->fetch_assoc()) {
-            echo "<tr>
-                    <td>{$row['id']}</td>
-                    <td>{$row['name']}</td>
-                    <td>{$row['email']}</td>
-                    <td>
-                        <a href='./edit.php?id={$row['id']}'>Editar</a> |
-                        <a href='./delete.php?id={$row['id']}'>Eliminar</a>
-                    </td>
-                 </tr>";
-        }
-        ?>
-    </table>
 
-    <h2>Agregar usuario</h2>
-    <form action="./add.php" method="post">
-        Nombre: <input type="text" name="name" required>
-        Email: <input type="email" name="email" required>
-        <button type="submit">Agregar</button>
-    </form>
+<header>
+  <h1>Infraestructura Multicapa – Grupo 04</h1>
+  <p>Router/DHCP · DNS · BBDD/SSH · Web/FTP · Clientes Windows & Linux</p>
+</header>
+
+<section>
+  <h2>Resumen de la Solución</h2>
+  <p>Arquitectura dividida en cuatro máquinas virtuales especializadas:
+    <strong>Router/DHCP</strong> para NAT y asignación de IPs,
+    <strong>DNS</strong> para resolución de nombres,
+    <strong>BBDD/SSH</strong> con MySQL y acceso seguro,
+    <strong>Web/FTP</strong> para servir la aplicación y transferencia de archivos.
+    Dos clientes (Windows y Linux) simulan usuarios finales.</p>
+</section>
+
+<section>
+  <h2>Equipamientos Educativos</h2>
+  <div class="table-container">
+    <?php
+    $sql = "SELECT * FROM equipaments_educacio LIMIT 50";
+    $result = $conn->query($sql);
+    
+    if ($result && $result->num_rows > 0) {
+        echo '<table>';
+        echo '<thead><tr>';
+        echo '<th>ID Registro</th><th>Nombre</th><th>Institución</th>';
+        echo '<th>Dirección</th><th>Barrio</th><th>Distrito</th>';
+        echo '<th>CP</th><th>Ciudad</th><th>Creado</th>';
+        echo '</tr></thead><tbody>';
+        
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . htmlspecialchars($row['register_id'] ?? '') . "</td>";
+            echo "<td>" . htmlspecialchars($row['name'] ?? '') . "</td>";
+            echo "<td>" . htmlspecialchars($row['institution_name'] ?? '') . "</td>";
+            echo "<td>" . htmlspecialchars($row['addresses_main_address'] ?? '') . "</td>";
+            echo "<td>" . htmlspecialchars($row['addresses_neighborhood_name'] ?? '') . "</td>";
+            echo "<td>" . htmlspecialchars($row['addresses_district_name'] ?? '') . "</td>";
+            echo "<td>" . htmlspecialchars($row['addresses_zip_code'] ?? '') . "</td>";
+            echo "<td>" . htmlspecialchars($row['addresses_town'] ?? '') . "</td>";
+            echo "<td>" . htmlspecialchars($row['created'] ?? '') . "</td>";
+            echo "</tr>";
+        }
+        
+        echo '</tbody></table>';
+        echo '<p style="margin-top:1rem; color:#7f8c8d; font-size:0.9rem;">Mostrando ' . $result->num_rows . ' registros</p>';
+    } else {
+        echo '<div class="no-data">No hay datos disponibles en la tabla equipaments_educacio</div>';
+    }
+    
+    $conn->close();
+    ?>
+  </div>
+</section>
+
+<section>
+  <p>Grupo 04 – Administración de Sistemas Informáticos en Red (Ciber)</p>
+</section>
+
+<footer>
+  <p>&copy; 2025 Grupo 04</p>
+</footer>
+
 </body>
 </html>
 ```
 
-
 ***
 
-## 6. Archivo `add.php` para insertar usuarios nuevos
+### Explicación por Secciones
 
+#### 1. PHP Inicial
 ```php
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 include 'db.php';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $name  = $_POST['name'];
-    $email = $_POST['email'];
-
-    $stmt = $conn->prepare("INSERT INTO users (name, email) VALUES (?, ?)");
-    $stmt->bind_param("ss", $name, $email);
-    $stmt->execute();
-
-    header("Location: index.php");
-    exit;
-}
 ?>
 ```
-
+Activa la visualización de errores e importa el archivo de conexión a MySQL (`db.php`).
 
 ***
 
-## 7. Archivo `edit.php` para editar usuarios existentes
-
-```php
-<?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-include 'db.php';
-
-if (isset($_GET['id'])) {
-    $id = (int)$_GET['id'];
-    $result = $conn->query("SELECT * FROM users WHERE id=$id");
-    $user = $result->fetch_assoc();
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id    = (int)$_POST['id'];
-    $name  = $_POST['name'];
-    $email = $_POST['email'];
-
-    $stmt = $conn->prepare("UPDATE users SET name=?, email=? WHERE id=?");
-    $stmt->bind_param("ssi", $name, $email, $id);
-    $stmt->execute();
-
-    header("Location: index.php");
-    exit;
-}
-?>
-
+#### 2. HTML y Metadatos
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Editar usuario</title>
-</head>
-<body>
-    <h1>Editar usuario</h1>
-    <form method="post">
-        <input type="hidden" name="id" value="<?= $user['id'] ?>">
-        Nombre: <input type="text" name="name" value="<?= $user['name'] ?>" required>
-        Email: <input type="email" name="email" value="<?= $user['email'] ?>" required>
-        <button type="submit">Guardar</button>
-    </form>
-</body>
-</html>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 ```
+Estructura HTML5 con codificación UTF-8 y configuración responsive para dispositivos móviles.
 
+---
+
+#### 3. Hojas de Estilo
+```html
+<link rel="stylesheet" href="owl.carousel.min.css">
+<link rel="stylesheet" href="owl.theme.default.min.css">
+<link rel="stylesheet" href="themify-icons.css">
+```
+Importa librerías CSS externas: Owl Carousel (carruseles) y Themify Icons.
 
 ***
 
-## 8. Archivo `delete.php` para borrar usuarios
-
-```php
-<?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-include 'db.php';
-
-$id = (int)$_GET['id'];
-$conn->query("DELETE FROM users WHERE id=$id");
-
-header("Location: index.php");
-exit;
-?>
-```
-
+#### 4. CSS Interno
+Define colores, espaciado y estilos de la tabla:
+- **header/footer**: Fondo oscuro con texto claro
+- **table**: Bordes sutil, filas alternadas con efecto hover
+- **.no-data**: Mensaje centrado cuando no hay datos
 
 ***
 
-## 9. Archivo `testdb.php` para probar la conexión a la base de datos
+#### 5. Cabecera y Secciones
+```html
+<header>...</header>
+<section>...</section>
+```
+Título del proyecto, descripción de la arquitectura e información del grupo.
 
+***
+
+#### 6. Consulta a Base de Datos
 ```php
-<?php
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
+$sql = "SELECT * FROM equipaments_educacio LIMIT 50";
+$result = $conn->query($sql);
+```
+Obtiene hasta 50 registros de la tabla `equipaments_educacio`.
 
-$host = '192.168.140.10';
-$user = 'bchecker';
-$pass = 'bchecker121';
-$db   = 'crud_php';
+***
 
-$conn = new mysqli($host, $user, $pass, $db);
-
-if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
+#### 7. Generación de Tabla
+```php
+if ($result && $result->num_rows > 0) {
+    // Encabezados
+    echo '<th>ID Registro</th><th>Nombre</th>...';
+    
+    // Filas de datos
+    while ($row = $result->fetch_assoc()) {
+        echo "<td>" . htmlspecialchars($row['register_id'] ?? '') . "</td>";
+        // ... más campos
+    }
 }
+```
+- Valida que hay datos
+- Crea encabezados de tabla con 9 columnas
+- Itera sobre cada registro y lo muestra como fila
+- **htmlspecialchars()**: Previene ataques XSS escapando caracteres especiales
+- **?? ''**: Muestra cadena vacía si el valor es NULL
 
-echo "Conexión OK!";
+***
+
+#### 8. Mensaje de Confirmación
+```php
+echo '<p>Mostrando ' . $result->num_rows . ' registros</p>';
+```
+Muestra el número total de registros mostrados.
+
+***
+
+#### 9. Manejo de Errores
+```php
+} else {
+    echo '<div class="no-data">No hay datos disponibles...</div>';
+}
+$conn->close();
 ?>
 ```
-
-Acceder en navegador:
-`http://192.168.40.10/testdb.php`
-
-***
-
-## 10. Enlace simbólico para vincular carpeta del proyecto al servidor web
-
-Si el proyecto está en `/home/isard/Projectes_1/app` y quieres que aparezca en `/var/www/html` ejecuta:
-
-```bash
-sudo rm -rf /var/www/html
-sudo ln -s /home/isard/Projectes_1/app /var/www/html
-```
-
-Esto crea un enlace simbólico que hará que los cambios en el proyecto se reflejen inmediatamente sin copiar manualmente.
-
-***
-
-## 11. Permisos recomendados para la carpeta del proyecto
-
-```bash
-sudo chown -R www-data:www-data /home/isard/Projectes_1/app
-sudo chmod -R 755 /home/isard/Projectes_1/app
-```
-
-
-***
-
-## 12. Verificación final
-
-1. Abre en navegador:
-`http://192.168.40.10/index.php`
-2. Comprueba que:
-
-- Se muestra correctamente la tabla de usuarios (vacía o con datos).
-- El formulario para agregar usuarios funciona.
-- Puedes editar y eliminar usuarios sin problemas.
-
-***
+Si no hay datos, muestra un mensaje y cierra la conexión a la BD.
