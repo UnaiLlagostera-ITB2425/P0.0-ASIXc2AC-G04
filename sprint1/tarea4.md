@@ -21,7 +21,7 @@ Se recomienda realizar las siguientes acciones previas al despliegue del servici
 
 ---
 
-## 3. Instalación del Servicio DNS
+## 2. Instalación del Servicio DNS
 
 Para el despliegue inicial del DNS en el servidor R-N04, se instalarán los paquetes principales del software Bind9, junto con las utilidades y documentación asociadas que facilitan la administración del servicio y futuras configuraciones.
 
