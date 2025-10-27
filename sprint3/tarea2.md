@@ -6,8 +6,6 @@
 
 Este archivo establece la conexión entre PHP y MySQL usando MySQLi, manejando credenciales y verificando errores para garantizar comunicación estable con la base de datos.
 
-
-
 #### Código Completo
 
 ```php
