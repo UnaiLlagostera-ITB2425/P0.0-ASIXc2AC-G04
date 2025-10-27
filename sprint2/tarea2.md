@@ -2,7 +2,6 @@
 ## 1. Estructura y creación de la base de datos
 Se ha creado la base de datos crud_db y la tabla principal equipaments_educacio para almacenar los datos importados desde el CSV de equipamientos educativos.
 ```sql
-sudo apt install mysql-server
 sudo systemctl restart mysql
 sudo systemctl status mysql
 ```
@@ -109,3 +108,4 @@ Se realizó una consulta de ejemplo para comprobar que los datos principales (co
 Se documenta la estructura final de la tabla tal como está en el proyecto, mostrando los campos y tipos de datos de cada uno.
 ```sql
 ![Creación de la tabla]​
+
