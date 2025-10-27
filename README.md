@@ -17,7 +17,7 @@
 - [Tarea 2: Configuración del servidor BBDD y importación de datos](sprint2/tarea2.md)
 - [Tarea 3: Configuración del servidor Web](sprint2/tarea3.md)
 - [Tarea 4: Configuración del servidor FTP](sprint2/tarea4.md)
-- [Tarea 5: Despliegue del servidor Router/DHCP](sprint2/tarea5.md)
+- [Tarea 5: Configuración del servidor Router/DHCP](sprint2/tarea5.md)
 - [Tarea 6: Pruebas preliminares de servicios](sprint2/tarea6.md)
 - Tarea 7: Documentación intermedia
 
