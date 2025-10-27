@@ -173,10 +173,10 @@ Título del proyecto, descripción de la arquitectura e información del grupo.
 
 #### 6. Consulta a Base de Datos
 ```php
-$sql = "SELECT * FROM equipaments_educacio LIMIT 50";
+$sql = "SELECT * FROM equipaments_educacio";
 $result = $conn->query($sql);
 ```
-Obtiene hasta 50 registros de la tabla `equipaments_educacio`.
+Obtiene todos los registros de la tabla `equipaments_educacio`.
 
 ***
 
