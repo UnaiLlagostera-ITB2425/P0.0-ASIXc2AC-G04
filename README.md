@@ -29,6 +29,6 @@
 - Tarea 4: Documentación final y entrega
 
 ---
-> Todos los sistemas (y aplicaciones que se monten) han de tener un usuario bchecker/Pw:bchecker121 que se ha de permitir acceder a los equipos.
+> Todos los sistemas (y aplicaciones) tienen U:bchecker/Pw:bchecker121.
 
 > Si la tarea no está linkeada es debido a que hemos decidido que no se ha de documentar o no és relevante.
