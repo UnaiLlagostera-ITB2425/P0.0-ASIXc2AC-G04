@@ -26,7 +26,7 @@
 - [Tarea 1: Despliegue e integración de clientes](sprint3/tarea1.md)
 - [Tarea 2: Desarrollo de la aplicación de consulta de datos](sprint3/tarea2.md)
 - [Tarea 3: Pruebas integradas de toda la infraestructura](sprint3/tarea3.md)
-- [Tarea 4: Documentación final y entrega](sprint3/tarea4.md)
+- Tarea 4: Documentación final y entrega
 
 ---
 > Todos los sistemas (y aplicaciones que se monten) han de tener un usuario bchecker/Pw:bchecker121 que se ha de permitir acceder a los equipos.
