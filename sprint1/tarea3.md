@@ -1,4 +1,4 @@
-# Despliegue Inicial del Router
+# Despliegue Inicial del Servidor Router (R-N04)
 
 Este documento describe los pasos necesarios para el despliegue inicial y configuración base de un equipo router con sistema operativo **Ubuntu Server**, previo a la instalación y configuración de los servicios **DHCP**, **DNS** y **NAT**.
 
