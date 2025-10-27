@@ -218,3 +218,5 @@ $conn->close();
 ?>
 ```
 Si no hay datos, muestra un mensaje y cierra la conexión a la BD.
+
+> ❗Hasta no configurar la conexión con BBDD no funcionará la página web.❗
