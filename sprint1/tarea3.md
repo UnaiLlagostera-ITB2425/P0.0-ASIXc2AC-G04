@@ -135,10 +135,3 @@ cat /proc/sys/net/ipv4/ip_forward
 (La salida debe ser `1`).
 
 ---
-
-## 5. Configuración básica de firewall
-
-El firewall debe permitir el tráfico de reenvío y administración del router.
-
-### 5.1 Instalación de UFW (Firewall sencillo)
-
