@@ -8,6 +8,10 @@ Este documento describe la configuración y despliegue inicial del servicio DNS,
 
 El servicio DNS es un componente crítico que permite resolver nombres de dominio internos en direcciones IP, facilitando la gestión y acceso a los recursos de red. Este manual detalla las etapas iniciales necesarias para el despliegue del servicio DNS, asegurando su correcta instalación y preparación para las configuraciones avanzadas posteriores.
 
+<div align="center">
+  <img src="/media/dns_how_works.gif" alt="Como funciona el DNS">
+</div>
+
 ---
 
 El servidor R-N04, con su sistema operativo y hardware preconfigurados, debe contar con conectividad de red estable, capacidad de acceso remoto seguro y respaldo configurado antes de iniciar la instalación del servidor DNS.
