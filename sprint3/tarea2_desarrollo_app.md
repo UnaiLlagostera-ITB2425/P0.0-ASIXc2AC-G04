@@ -1,4 +1,4 @@
-# Tarea 2: Desarrollo de la aplicación de consulta de datos
+# Desarrollo de la aplicación de consulta de datos
 
 ## Configuración para conexión remota con la BBDD desde s. WEB (192.168.40.10)
 
