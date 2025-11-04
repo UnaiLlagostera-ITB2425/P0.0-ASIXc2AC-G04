@@ -2,7 +2,7 @@
   <h1>Organización del equipo y preparación inicial</h1>
 </div>
 
-## Objetivo
+### Objetivo
 
 Establecer la organización del grupo de trabajo y preparar el espacio común del proyecto utilizando GitHub y ProofHub, donde todo el equipo podrá compartir archivos y documentación.
 
