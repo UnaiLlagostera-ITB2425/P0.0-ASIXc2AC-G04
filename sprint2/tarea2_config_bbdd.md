@@ -129,4 +129,3 @@ ls | grep backup
 ```
 
 ![Backup de la base de datos](../media/cano_backupBD.png)
-Esta estructurada correctamente con encabezados y bloques de código donde corresponde, y las imágenes ubicadas tras explicar cada sección.
