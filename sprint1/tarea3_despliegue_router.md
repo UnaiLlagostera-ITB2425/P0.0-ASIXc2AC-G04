@@ -4,7 +4,11 @@ Este documento describe los pasos necesarios para el despliegue inicial y config
 
 ---
 
-## 1. Objetivo
+## 1. Introduccion
+
+Un router es un dispositivo de red que conecta diferentes redes entre sí y dirige el tráfico de datos entre ellas de manera eficiente. Sirve para interconectar la red interna con otras redes externas, como Internet, y para segmentar redes internas, como separar la DMZ de la intranet y la red de clientes. 
+
+Además, un router gestiona la asignación de direcciones IP (mediante DHCP), el enrutamiento de paquetes y puede aplicar traducción de direcciones de red (NAT) para permitir la comunicación segura y controlada entre usuarios internos y externos.
 
 El objetivo del procedimiento es preparar una máquina con **Ubuntu Server** para funcionar como router básico entre diferentes redes. Este despliegue dejará operativo el sistema con las interfaces configuradas y verificadas, asegurando conectividad IP antes de instalar y configurar otros servicios de red.
 
@@ -17,7 +21,7 @@ El objetivo del procedimiento es preparar una máquina con **Ubuntu Server** par
 - Equipo con al menos **2 interfaces de red**:
   - **enp1s0**: Interfaz WAN (acceso a Internet).
   - **enp2s0**: Interfaz LAN (red interna 192.168.40.0/24).
-  - (Opcional) **enp3s0**: interfaz DMZ o redes adicionales.
+  - **enp3s0**: Interfaz DHCP y gateway para dispositivos en la intranet.
 - Memoria RAM mínima: 1 GB.
 - Espacio en disco: 10 GB disponibles.
 
