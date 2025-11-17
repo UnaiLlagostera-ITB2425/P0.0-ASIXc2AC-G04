@@ -98,7 +98,8 @@ sftp -P 2222 bchecker@192.168.40.30
 El listado y las operaciones con archivos funcionaron perfectamente.
 
 Ejemplo de sesión exitosa:
-![Conexión y prueba SFTP correcta](../../media/cano_connect_SFTP.png
+![Conexión y prueba SFTP correcta](../../media/cano_connect_SFTP.png)
 
 ## Conclusión:
 El acceso SFTP funciona correctamente con el usuario local y el nuevo puerto 2222, ofreciendo seguridad, funcionalidad completa y evitando todos los problemas experimentados con FTPS y FTP tradicional.
+
