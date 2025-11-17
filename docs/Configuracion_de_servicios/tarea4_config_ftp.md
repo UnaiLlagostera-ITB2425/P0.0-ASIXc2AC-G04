@@ -86,8 +86,9 @@ Se editó el archivo /etc/ssh/sshd_config para cambiar el puerto predeterminado 
 
 Se recargó el servicio SSH para aplicar los cambios:
 
-bash
+```sql
 sudo systemctl restart ssh
+```
 Prueba de acceso SFTP:
 La conexión SFTP se realizó correctamente usando el usuario bchecker y el nuevo puerto 2222:
 
@@ -100,5 +101,6 @@ El listado y las operaciones con archivos funcionaron perfectamente.
 
 ## Conclusión:
 El acceso SFTP funciona correctamente con el usuario local y el nuevo puerto 2222, ofreciendo seguridad, funcionalidad completa y evitando todos los problemas experimentados con FTPS y FTP tradicional.
+
 
 
