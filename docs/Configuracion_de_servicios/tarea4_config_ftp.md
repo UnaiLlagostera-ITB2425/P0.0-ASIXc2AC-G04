@@ -82,8 +82,7 @@ Tras los problemas con FTPS, se decidió probar el acceso SFTP, que utiliza el p
 Cambios en la configuración:
 Se editó el archivo /etc/ssh/sshd_config para cambiar el puerto predeterminado (22) al puerto 2222:
 
-Port 2222
-![Configuración puerto SSH/SFTP](
+![Configuración puerto SSH/SFTP](../../media/cano_conf_port_SFTP.png)
 
 Se recargó el servicio SSH para aplicar los cambios:
 
@@ -97,9 +96,9 @@ sftp -P 2222 bchecker@192.168.40.30
 ```
 El listado y las operaciones con archivos funcionaron perfectamente.
 
-Ejemplo de sesión exitosa:
 ![Conexión y prueba SFTP correcta](../../media/cano_connect_SFTP.png)
 
 ## Conclusión:
 El acceso SFTP funciona correctamente con el usuario local y el nuevo puerto 2222, ofreciendo seguridad, funcionalidad completa y evitando todos los problemas experimentados con FTPS y FTP tradicional.
+
 
