@@ -1,6 +1,4 @@
-<div style="text-align: center;">
-  <h1>Informe de Diseño de Infraestructura de Red (Con Servidor Linux)</h1>
-</div>
+# Diseño de Infraestructura de Red
 
 ## 1. Resumen General
 Se desplegará una infraestructura con un total de 4 servidores que cumplirán múltiples funciones para soportar los servicios de la organización. La red está dividida en dos subredes principales para mejorar la seguridad y el rendimiento:
@@ -56,8 +54,8 @@ Se desplegará una infraestructura con un total de 4 servidores que cumplirán m
 - Contraseña: `bchecker121`
 - Almacenamiento y carga de la base de datos externa (por ejemplo CSV de equipamientos educativos).
 
-### F-N04 (Servidor FTPS)
-- Servicio FTPS para transferencia segura de archivos.
+### F-N04 (Servidor FTP)
+- Servicio FTP para transferencia de archivos.
 - Punto central para intercambio de información y backups.
 
 ---
@@ -65,17 +63,24 @@ Se desplegará una infraestructura con un total de 4 servidores que cumplirán m
 ## 5. Servicios que proveerá el Router R-N04
 
 ### DMZ (Zona Desmilitarizada)
-- Se configura una subred dedicada para alojar servidores accesibles desde internet, como el servidor web (W-N04) o el servidor FTPS (F-N04).
+
+Será una subred aislada del segmento interno de la organización donde se sitúan servicios expuestos hacia internet, como el servidor web o FTP. 
+
+Su propósito es limitar el alcance de ataques externos, de modo que, aunque un atacante comprometa un servicio en la DMZ, no tenga acceso directo a la red interna. 
+
+- Se configura una subred dedicada para alojar servidores accesibles desde internet, como el servidor web (W-N04) o el servidor FTP (F-N04).
 - El router R-N04 segmenta esta red para aislarla de la red interna (Intranet) mediante listas de control de acceso (ACL) y firewall.
 - El tráfico externo autorizado hacia la DMZ se permite para servicios específicos, garantizando seguridad.
 
 ### Intranet
-- La Intranet es la red interna privada donde se ubican los dispositivos y usuarios.
-- El acceso a la DMZ y a recursos externos (internet) está controlado estrictamente, permitiendo sólo el tráfico necesario.
+
+Es el entorno seguro donde operan y se comunican los dispositivos de usuario y los servidores no expuestos Está estrictamente segmentada y aislada, permitiendo solo el acceso a aplicaciones internas y recursos de la organización, y únicamente a internet a través de NAT controlado.
 
 ### NAT (Network Address Translation)
-- R-N04 actúa como dispositivo NAT para permitir que los dispositivos de la red interna (Intranet) accedan a internet usando una única IP pública.
-- Se implementa NAT para controlar el acceso a las redes privadas desde o hacia la DMZ, traduciendo direcciones IP y puertos para mejorar la seguridad.
+
+Permite que múltiples dispositivos de la red interna salgan a internet utilizando una única IP pública. Además traduce direcciones y puertos cuando comunica internamente entre subredes, ocultando la topología real y añadiendo una capa extra de seguridad y privacidad para dispositivos internos.
+
+- R-N04 actúa como dispositivo NAT para que los dispositivos de la Intranet accedan a internet.
 
 ---
 
@@ -83,7 +88,7 @@ Se desplegará una infraestructura con un total de 4 servidores que cumplirán m
 
 - Los clientes ubicados en la subred 192.168.140.0/24 **no tienen acceso directamente a la DMZ** para evitar riesgos de seguridad.
 - El router R-N04 implementará reglas de firewall para bloquear el tráfico directo desde la red de clientes hacia la DMZ, permitiendo sólo conexiones estrictamente necesarias.
-- Los servidores Linux pueden usar herramientas robustas como `iptables`, `firewalld` o `ufw` para crear políticas avanzadas de control de acceso y protección local.
+- Los servidores Linux pueden usar herramientas robustas como `iptables`, `firewall` o `ufw` para crear políticas avanzadas de control de acceso y protección local.
 
 ---
 

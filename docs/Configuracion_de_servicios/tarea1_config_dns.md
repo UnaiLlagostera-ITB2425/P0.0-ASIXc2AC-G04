@@ -30,6 +30,14 @@ recursion yes;
 
 ## 2. Declaración de Zonas en Named
 
+Una zona DNS es un segmento administrativo y de autoridad dentro del espacio total de nombres de dominio. Representa un dominio o subdominio y contiene los registros de nombres IP que el servidor DNS autoritativo maneja directamente.
+
+- La zona directa (forward zone) contiene registros que resuelven nombres de host legibles (como web.grup4.com) a direcciones IP.
+
+- La zona inversa (reverse zone) permite hacer la resolución inversa; es decir, obtener el nombre del host a partir de una dirección IP, utilizando registros PTR.
+
+Definir explícitamente las zonas en named.conf.local con sus archivos respectivos (db.grup4.com, db.192.168.40) permite al servidor Bind9 conocer qué nombres y direcciones es responsable de resolver, facilitando administración segmentada y confiable.
+
 Editar `/etc/bind/named.conf.local` para especificar las zonas que el servidor manejará.
 
 Ejemplo de definición para zona directa e inversa:
@@ -49,6 +57,15 @@ file "/etc/bind/db.192.168.40";
 ---
 
 ## 3. Archivo de Zona Directa (`db.grup4.com`)
+
+Los registros DNS en las zonas cumplen funciones específicas:
+
+- SOA (Start of Authority): Define el servidor principal de la zona y parámetros de administración, como tiempos de refresco y expiración.
+- NS (Name Server): Especifica los servidores DNS autoritativos para la zona.
+- A (Address): Asocia nombres de host a direcciones IPv4.
+- PTR (Pointer): Usado en zonas inversas para mapear IPs a nombres. 
+
+Mantener un número de serie en los archivos de zona es crucial para que los servidores secundarios puedan detectar cambios y actualizar sus copias mediante transferencias de zona.
 
 Archivo de ejemplo para la zona `grup4.com`:
 

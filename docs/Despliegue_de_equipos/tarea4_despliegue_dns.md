@@ -1,4 +1,4 @@
-# Despliegue Inicial del Servidor DNS - Parte del Servidor R-N04
+# Despliegue Inicial del Servidor DNS
 
 Este documento describe la configuración y despliegue inicial del servicio DNS, que forma parte integral del servidor **R-N04**. Para evitar repetición, no se incluyen aquí detalles de instalación y configuración base del servidor físico o sistema operativo que ya están documentados en el manual general del servidor R-N04.
 
@@ -29,10 +29,13 @@ Se recomienda realizar las siguientes acciones previas al despliegue del servici
 
 Para el despliegue inicial del DNS en el servidor R-N04, se instalarán los paquetes principales del software Bind9, junto con las utilidades y documentación asociadas que facilitan la administración del servicio y futuras configuraciones.
 
+Bind9 es el software de referencia en sistemas Linux para implementar servidores DNS autoritativos y de caché. Ofrece robustez, flexibilidad y soporte completo para configuraciones avanzadas: zonas externas, internas, vistas separadas y controles de acceso. 
+
+Utilizar Bind9 permite estructurar la resolución de nombres según las necesidades de la organización, soportar servicios críticos y garantizar rendimiento y escalabilidad.
+
 Comandos necesarios para instalar el servicio:
 
 ```bash
 sudo apt update
 sudo apt install bind9 bind9utils bind9-doc -y
 ```
-
