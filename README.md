@@ -30,6 +30,13 @@
 - Tarea 4: Documentación final y entrega
 
 ---
+
+- [Manual administrador](manuals/manual_admin.md)
+
+- [Manual usuario](manuals/manual_usuario.md)
+
+---
+
 > Todos los sistemas (y aplicaciones) tienen U:bchecker/Pw:bchecker121.
 
 > Si la tarea no está linkeada es debido a que hemos decidido que no se ha de documentar o no és relevante.
