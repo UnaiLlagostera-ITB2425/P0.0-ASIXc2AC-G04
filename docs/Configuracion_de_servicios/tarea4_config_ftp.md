@@ -53,7 +53,52 @@ sudo systemctl status vsftpd
 
 ## 4. Prueba de conexión FTPS
 
-Se utilizó el comando `lftp` para establecer una conexión segura FTPS al servidor y comprobar la operativa (listado de archivos, subida/descarga):
+Se utilizó el comando `lftp` y `Filezilla` para establecer una conexión segura FTPS al servidor y comprobar la operativa (listado de archivos, subida/descarga):
 ```sql
 lftp ftps://usuario@IP_DEL_SERVIDOR
 ```
+Solo que daba el siguiente mensage de error:
+```sql
+Estado:    Conectando a 192.168.40.30:21...
+Estado:    Conexión establecida, esperando el mensaje de bienvenida...
+Estado:    Inicializando TLS...
+Estado:    Conexión TLS establecida.
+Comando:   USER bchecker
+Respuesta: 331 Please specify the password.
+Comando:   PASS ***********
+Error:     Error GnuTLS -15 en gnutls_record_recv: Se recibió un paquete TLS inesperado.
+Error:     No se pudo leer desde el socket: ECONNABORTED - Conexión abortada
+Error:     No se pudo conectar al servidor
+```
+
+## 5. Canvio de protocolo de FTPS a SFTP
+A pesar de que la conexión FTPS inicializaba y el cliente aceptaba el certificado, el servidor bloqueaba la comunicación, presentando errores recurrentes como Error GnuTLS -15 en gnutls_record_recv: Se recibió un paquete TLS inesperado y ECONNABORTED. La conexión TLS se establecía, pero el canal de datos o el listado de directorios fallaban sistemáticamente, impidiendo el funcionamiento normal del servicio.
+
+Debido a estos problemas, y tras múltiples intentos de ajuste y diagnóstico, se decidió probar una alternativa más robusta y fácil de mantener: SFTP (SSH File Transfer Protocol), aprovechando la fiabilidad y el cifrado que proporciona SSH por defecto.
+
+## 6. Comprobación y migración a SFTP (SSH File Transfer Protocol)
+Tras los problemas con FTPS, se decidió probar el acceso SFTP, que utiliza el protocolo SSH y cifra todas las transferencias por defecto.
+
+Cambios en la configuración:
+Se editó el archivo /etc/ssh/sshd_config para cambiar el puerto predeterminado (22) al puerto 2222:
+
+Port 2222
+![Configuración puerto SSH/SFTP](
+
+Se recargó el servicio SSH para aplicar los cambios:
+
+bash
+sudo systemctl restart ssh
+Prueba de acceso SFTP:
+La conexión SFTP se realizó correctamente usando el usuario bchecker y el nuevo puerto 2222:
+
+```sql
+sftp -P 2222 bchecker@192.168.40.30
+```
+El listado y las operaciones con archivos funcionaron perfectamente.
+
+Ejemplo de sesión exitosa:
+![Conexión y prueba SFTP correcta](../../media/cano_connect_SFTP.png
+
+## Conclusión:
+El acceso SFTP funciona correctamente con el usuario local y el nuevo puerto 2222, ofreciendo seguridad, funcionalidad completa y evitando todos los problemas experimentados con FTPS y FTP tradicional.
