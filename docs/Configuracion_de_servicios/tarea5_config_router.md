@@ -91,7 +91,7 @@ Edita `/etc/dhcp/dhcpd.conf` y define el rango de direcciones, gateway y DNS par
 
 ```bash
 subnet 192.168.140.0 netmask 255.255.255.0 {  
-  range 192.168.140.10 192.168.140.50;
+  range 192.168.140.100 192.168.140.150;
   option routers 192.168.140.1;
   option domain-name-servers 192.168.40.1, 8.8.8.8;
   option domain-name "grup4.com";

@@ -14,7 +14,7 @@ Se desplegará una infraestructura con un total de 4 servidores que cumplirán m
 |----------|----------------------------------|---------------------|------------------------------------------------------------------|
 | R-N04    | Router, DHCP, DNS                | 192.168.40.1        | Controla el tráfico entre subredes, asigna IPs dinámicas y resuelve nombres.|
 | W-N04    | Servidor Web                     | 192.168.40.10        | Aloja el sitio web y servicios web internos o externos.          |
-| B-N04    | Servidor Base de datos MySQL     | 192.168.40.20        | Base de datos.       |
+| B-N04    | Servidor Base de datos MySQL     | 192.168.140.20        | Base de datos.       |
 | F-N04    | Servidor FTP                    | 192.168.40.30        | Servicio FTP para transferencia de archivos.                    |
 
 ---
@@ -32,7 +32,7 @@ Se desplegará una infraestructura con un total de 4 servidores que cumplirán m
 - Comunicaciones hacia servidores reguladas por reglas de firewall y NAT en el router.
 
 <div align="center">
-  <img src="/media/DISEÑO RED.drawio.png" alt="Diseno de Red">
+  <img src="/media/DISEÑO RED.png" alt="Diseno de Red">
 </div>
 
 ---
