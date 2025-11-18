@@ -1,7 +1,11 @@
 # Diseño de Infraestructura de Red
 
 ## 1. Resumen General
-Se desplegará una infraestructura con un total de 4 servidores que cumplirán múltiples funciones para soportar los servicios de la organización. La red está dividida en dos subredes principales para mejorar la seguridad y el rendimiento:
+Se desplegará una infraestructura con un total de 4 servidores que cumplirán múltiples funciones para soportar los servicios de la organización. Las distribuciones Linux, especialmente las diseñadas para servidores, son reconocidas por su estabilidad, bajo consumo de recursos y alta confiabilidad en entornos de producción. La robustez del kernel Linux garantiza disponibilidad continua y menos errores imprevistos.
+
+Además, Linux permite una gran personalización adaptada a cada rol de servidor, desde web hasta base de datos, y ofrece un ecosistema completo de herramientas para administración, automatización y monitoreo, optimizando los procesos de mantenimiento. Su condición de software libre reduce los costos de licenciamiento y facilita la auditoría, mientras que el soporte comunitario proporciona acceso a recursos, actualizaciones y mejores prácticas que aseguran la evolución y crecimiento efectivo de la infraestructura. 
+
+La red está dividida en dos subredes principales:
 
 - **Nube de servidores:** 192.168.40.0/24  
 - **Nube de clientes:** 192.168.140.0/24
@@ -15,7 +19,7 @@ Se desplegará una infraestructura con un total de 4 servidores que cumplirán m
 | R-N04    | Router, DHCP, DNS                | 192.168.40.1        | Controla el tráfico entre subredes, asigna IPs dinámicas y resuelve nombres.|
 | W-N04    | Servidor Web                     | 192.168.40.10        | Aloja el sitio web y servicios web internos o externos.          |
 | B-N04    | Servidor Base de datos MySQL     | 192.168.140.20        | Base de datos.       |
-| F-N04    | Servidor FTP                    | 192.168.40.30        | Servicio FTP para transferencia de archivos.                    |
+| F-N04    | Servidor FTP                    | 192.168.40.30        | Servicio SFTP para transferencia de archivos.                    |
 
 ---
 
@@ -32,7 +36,7 @@ Se desplegará una infraestructura con un total de 4 servidores que cumplirán m
 - Comunicaciones hacia servidores reguladas por reglas de firewall y NAT en el router.
 
 <div align="center">
-  <img src="/media/DISEÑO RED.png" alt="Diseno de Red">
+  <img src="../../media/DISEÑO RED.png" alt="Diseno de Red">
 </div>
 
 ---
@@ -55,7 +59,7 @@ Se desplegará una infraestructura con un total de 4 servidores que cumplirán m
 - Almacenamiento y carga de la base de datos externa (por ejemplo CSV de equipamientos educativos).
 
 ### F-N04 (Servidor FTP)
-- Servicio FTP para transferencia de archivos.
+- Servicio SFTP para transferencia de archivos.
 - Punto central para intercambio de información y backups.
 
 ---
