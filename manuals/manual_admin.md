@@ -319,8 +319,6 @@ Tabla Principal: equipaments_educacio
 - Dirección, Barrio, Distrito
 - Código Postal, Ciudad, Fecha de Creación
 
-**Limit**: 50 registros por página
-
 ---
 
 ## 7. Servidor Base de Datos (B-N04)
