@@ -18,7 +18,7 @@
 5. [Servidor Router (R-N04)](#5-servidor-router-r-n04)
 6. [Servidor Web (W-N04)](#6-servidor-web-w-n04)
 7. [Servidor Base de Datos (B-N04)](#7-servidor-base-de-datos-b-n04)
-8. [Servidor FTP (F-N04)](#8-servidor-ftp-f-n04)
+8. [Servidor SFTP (F-N04)](#8-servidor-sftp-f-n04)
 9. [Configuración de la Aplicación Web](#9-configuración-de-la-aplicación-web)
 10. [Procedimientos Administrativos](#10-procedimientos-administrativos)
 11. [Seguridad y Buenas Prácticas](#11-seguridad-y-buenas-prácticas)
@@ -53,7 +53,7 @@ La infraestructura está compuesta por **4 servidores virtualizados** utilizando
 | Router/DHCP/DNS | R-N04 | 192.168.40.1 | DMZ | Enrutamiento, NAT, DHCP, DNS | Ubuntu Server 22.04 |
 | Servidor Web | W-N04 | 192.168.40.10 | DMZ | Apache2, PHP, Aplicación Web | Ubuntu Server 22.04 |
 | Base de Datos | B-N04 | 192.168.140.20 | Intranet | MySQL Server, SSH | Ubuntu Server 22.04 |
-| Servidor FTP | F-N04 | 192.168.40.30 | DMZ | vsftpd, FTPS (FTP Seguro) | Ubuntu Server 22.04 |
+| Servidor SFTP | F-N04 | 192.168.40.30 | DMZ | OpenSSH, SFTP (SSH File Transfer) | Ubuntu Server 22.04 |
 
 ### 2.3 Servicios de Red
 
@@ -61,8 +61,8 @@ La infraestructura está compuesta por **4 servidores virtualizados** utilizando
 - **Asignación de IPs**: DHCP (isc-dhcp-server) en R-N04
 - **Enrutamiento**: IPTables/NAT en R-N04
 - **Base de Datos**: MySQL Server en B-N04 (accesible desde Intranet)
-- **Acceso Remoto Seguro**: SSH en B-N04
-- **Transferencia Segura**: FTPS en F-N04
+- **Acceso Remoto Seguro**: SSH en B-N04 y F-N04
+- **Transferencia Segura**: SFTP (SSH) en F-N04
 - **Aplicación Web**: PHP + Apache2 en W-N04
 
 ---
@@ -72,7 +72,7 @@ La infraestructura está compuesta por **4 servidores virtualizados** utilizando
 ### 3.1 Segmentación de Red
 
 **DMZ (Zona Desmilitarizada)**: 192.168.40.0/24
-- Contiene servidores públicos (Web, FTP, Router)
+- Contiene servidores públicos (Web, SFTP, Router)
 - Accesible desde redes externas para servicios específicos
 - Aislada de la Intranet mediante firewall controlado
 
@@ -93,11 +93,11 @@ La infraestructura está compuesta por **4 servidores virtualizados** utilizando
 
 ```
 Clientes Intranet (192.168.140.0/24)
-    ↓ (DHCP, DNS, HTTP)
+    ↓ (DHCP, DNS, HTTP, SFTP)
 R-N04 (Router NAT)
     ↓ (Firewall rules)
     ├→ W-N04 (Puerto 80/443)
-    ├→ F-N04 (Puerto 21/990)
+    ├→ F-N04 (Puerto 2222 SFTP)
     └→ B-N04 (Puerto 3306 desde W-N04, restringido por firewall)
     
 W-N04 (Servidor Web en DMZ)
@@ -136,13 +136,13 @@ Todas las máquinas han sido creadas mediante **Isard** con las siguientes carac
 - **Sistema Operativo**: Ubuntu Server 22.04 LTS
 - **Software**: MySQL Server
 
-#### F-N04 (Servidor FTP)
+#### F-N04 (Servidor SFTP)
 - **vCPU**: 2 cores
 - **RAM**: 2 GB
 - **Almacenamiento**: 50 GB
 - **Interfaces de Red**: 1 (DMZ)
 - **Sistema Operativo**: Ubuntu Server 22.04 LTS
-- **Software**: vsftpd
+- **Software**: OpenSSH Server
 
 ### 4.2 Configuración de Interfaces de Red (Netplan)
 
@@ -181,6 +181,19 @@ network:
       dhcp4: false
       addresses: [192.168.140.20/24]
       gateway4: 192.168.140.1
+      nameservers:
+        addresses: [192.168.40.1, 8.8.8.8]
+  version: 2
+```
+
+#### Ejemplo F-N04 (SFTP en DMZ):
+```yaml
+network:
+  ethernets:
+    enp1s0:
+      dhcp4: false
+      addresses: [192.168.40.30/24]
+      gateway4: 192.168.40.1
       nameservers:
         addresses: [192.168.40.1, 8.8.8.8]
   version: 2
@@ -362,53 +375,115 @@ Verificar:
 
 ---
 
-## 8. Servidor FTP (F-N04)
+## 8. Servidor SFTP (F-N04)
 
-### 8.1 Servicio vsftpd + FTPS
+### 8.1 Servicio OpenSSH + SFTP
 
-**Protocolo**: FTPS (FTP Seguro) - cifrado SSL/TLS
+**Protocolo**: SFTP (SSH File Transfer Protocol)
 
 **Características**:
-- Usuarios locales autenticados
-- SSL/TLS obligatorio para control y datos
-- Certificado autofirmado (365 días)
-- Deshabilita protocolos inseguros (SSLv2, SSLv3)
-- Sin acceso anónimo
+- Basado en OpenSSH Server
+- Todo el tráfico cifrado mediante SSH
+- Autenticación por contraseña y/o clave pública
+- Puerto personalizado: **2222** (en lugar del 22 estándar)
+- Modo pasivo configurado: puertos 40000-50000
+- Jaula chroot para usuarios SFTP
 
-### 8.2 Configuración (`/etc/vsftpd.conf`)
+### 8.2 Configuración (`/etc/ssh/sshd_config`)
 
 | Parámetro | Valor | Descripción |
 |-----------|-------|-------------|
-| anonymous_enable | NO | Deshabilita acceso anónimo |
-| local_enable | YES | Habilita usuarios locales |
-| write_enable | YES | Permite uploads/writes |
-| ssl_enable | YES | Activa SSL/TLS |
-| force_local_logins_ssl | YES | SSL obligatorio para login |
-| force_local_data_ssl | YES | SSL obligatorio para datos |
-| rsa_cert_file | /etc/ssl/private/vsftpd.pem | Ruta certificado |
-| rsa_private_key_file | /etc/ssl/private/vsftpd.pem | Ruta clave privada |
+| Port | 2222 | Puerto personalizado para SSH/SFTP |
+| PermitRootLogin | no | Deshabilita login directo como root |
+| PasswordAuthentication | yes | Permite autenticación por contraseña |
+| PubkeyAuthentication | yes | Permite autenticación por clave pública |
+| Subsystem sftp | internal-sftp | Habilita subsistema SFTP interno |
+| Match Group sftpusers | - | Configuración específica para grupo |
+| ChrootDirectory | /home/%u | Jaula chroot por usuario |
+| ForceCommand | internal-sftp | Fuerza uso de SFTP (no shell) |
+| PermitTunnel | no | Deshabilita túneles |
+| AllowAgentForwarding | no | Deshabilita forwarding de agente |
+| AllowTcpForwarding | no | Deshabilita forwarding TCP |
+| X11Forwarding | no | Deshabilita X11 forwarding |
 
-### 8.3 Certificado SSL
+### 8.3 Configuración de Modo Pasivo
 
-**Generado con**:
+**Rango de puertos pasivos**: 40000-50000
+
+Configuración en `/etc/ssh/sshd_config` o archivo adicional:
 ```
-RSA 2048-bit, autofirmado
-Validez: 365 días
-Ubicación: /etc/ssl/private/vsftpd.pem
+# Configuración adicional para SFTP
+PassivePorts 40000 50000
 ```
 
-### 8.4 Gestión de Usuarios FTP
+**Firewall debe permitir**:
+- Puerto 2222 (conexión de control SSH/SFTP)
+- Puertos 40000-50000 (transferencias de datos en modo pasivo)
 
-Los usuarios FTP son **usuarios del sistema Linux**. Crear nuevo usuario:
+### 8.4 Gestión de Usuarios SFTP
+
+Los usuarios SFTP son **usuarios del sistema Linux** con restricciones especiales.
+
+**Crear nuevo usuario SFTP**:
 
 ```bash
-sudo useradd -m -s /bin/false usuario_ftp
-sudo passwd usuario_ftp
+# Crear grupo sftpusers (si no existe)
+sudo groupadd sftpusers
+
+# Crear usuario
+sudo useradd -m -g sftpusers -s /bin/false usuario_sftp
+
+# Establecer contraseña
+sudo passwd usuario_sftp
+
+# Ajustar permisos del home (requerido para chroot)
+sudo chown root:root /home/usuario_sftp
+sudo chmod 755 /home/usuario_sftp
+
+# Crear directorio de uploads dentro del home
+sudo mkdir /home/usuario_sftp/uploads
+sudo chown usuario_sftp:sftpusers /home/usuario_sftp/uploads
+sudo chmod 755 /home/usuario_sftp/uploads
 ```
 
-El directorio home del usuario será su raíz FTP.
+**Eliminar usuario**:
+```bash
+sudo userdel -r usuario_sftp
+```
 
-**Recomendación**: Crear usuarios específicos con shell restringido (`/bin/false`).
+**Cambiar contraseña**:
+```bash
+sudo passwd usuario_sftp
+```
+
+**Listar usuarios SFTP**:
+```bash
+getent group sftpusers
+```
+
+### 8.5 Autenticación por Clave Pública (Opcional)
+
+Para mayor seguridad, se puede configurar autenticación por clave SSH:
+
+```bash
+# En el cliente, generar par de claves
+ssh-keygen -t rsa -b 4096 -C "usuario@dominio.com"
+
+# Copiar clave pública al servidor
+ssh-copy-id -p 2222 usuario_sftp@192.168.40.30
+
+# O manualmente, agregar clave a:
+# /home/usuario_sftp/.ssh/authorized_keys
+```
+
+### 8.6 Reiniciar Servicio
+
+Después de cambios en configuración:
+
+```bash
+sudo systemctl restart ssh
+sudo systemctl status ssh
+```
 
 ---
 
@@ -488,8 +563,8 @@ systemctl {start|stop|restart|status} php-fpm
 # Base de Datos (B-N04)
 systemctl {start|stop|restart|status} mysql
 
-# FTP (F-N04)
-systemctl {start|stop|restart|status} vsftpd
+# SFTP (F-N04)
+systemctl {start|stop|restart|status} ssh
 ```
 
 ### 10.2 Verificación de Conectividad
@@ -499,30 +574,42 @@ systemctl {start|stop|restart|status} vsftpd
 ping 192.168.40.1    # Router (DMZ)
 ping 192.168.40.10   # Web (DMZ)
 ping 192.168.140.20  # BBDD (Intranet)
-ping 192.168.40.30   # FTP (DMZ)
+ping 192.168.40.30   # SFTP (DMZ)
 
 # Resolución DNS
 nslookup bd.grup4.com 192.168.40.1
 dig @192.168.40.1 www.grup4.com
+dig @192.168.40.1 ftp.grup4.com
 
 # Conexión a bases de datos desde W-N04
 mysql -h 192.168.140.20 -u bchecker -p -e "SELECT 1"
 
+# Prueba de SFTP
+sftp -P 2222 usuario@192.168.40.30
+
 # Puertos abiertos
 netstat -tlnp | grep LISTEN
+ss -tlnp | grep 2222
 ```
 
-### 10.3 Administración de Usuarios FTP
+### 10.3 Administración de Usuarios SFTP
 
-**Crear usuario**:
+**Crear usuario completo**:
 ```bash
-sudo useradd -m -s /bin/false usuario
+sudo groupadd sftpusers  # Si no existe
+sudo useradd -m -g sftpusers -s /bin/false usuario
 sudo passwd usuario
+sudo chown root:root /home/usuario
+sudo chmod 755 /home/usuario
+sudo mkdir /home/usuario/uploads
+sudo chown usuario:sftpusers /home/usuario/uploads
+sudo systemctl restart ssh
 ```
 
 **Eliminar usuario**:
 ```bash
 sudo userdel -r usuario
+sudo systemctl restart ssh
 ```
 
 **Cambiar contraseña**:
@@ -530,9 +617,17 @@ sudo userdel -r usuario
 sudo passwd usuario
 ```
 
-**Listar usuarios SFTP/FTP**:
+**Listar usuarios SFTP**:
 ```bash
-cat /etc/passwd | grep -E '(usuarios_ftp|bin/false)'
+getent group sftpusers
+cat /etc/passwd | grep sftpusers
+```
+
+**Ver sesiones activas**:
+```bash
+who
+w
+last -a | grep sftp
 ```
 
 ---
@@ -546,7 +641,8 @@ cat /etc/passwd | grep -E '(usuarios_ftp|bin/false)'
 1. **DMZ (192.168.40.0/24)**:
    - Puerto 80 (HTTP): Abierto a público
    - Puerto 443 (HTTPS): Abierto a público
-   - Puerto 21/990 (FTP/FTPS): Restringido a IPs autorizadas
+   - **Puerto 2222 (SFTP)**: Restringido a IPs autorizadas o abierto con autenticación fuerte
+   - **Puertos 40000-50000 (SFTP pasivo)**: Permitir para transferencias de datos
    - Puerto 3306 (MySQL): NUNCA directamente desde DMZ
 
 2. **Intranet (192.168.140.0/24)**:
@@ -564,14 +660,20 @@ cat /etc/passwd | grep -E '(usuarios_ftp|bin/false)'
 
 > ⚠️ **CAMBIAR EN PRODUCCIÓN** - Usar contraseñas fuertes y únicas por servidor
 
-### 11.3 Certificados SSL
+### 11.3 Seguridad SSH/SFTP
 
-**FTP**:
-- Autofirmado para ambiente de prueba
-- En producción, usar certificado válido de CA
+**Buenas prácticas implementadas**:
+- Puerto no estándar (2222)
+- Root login deshabilitado
+- Jaula chroot para usuarios SFTP
+- Sin shell para usuarios SFTP (/bin/false)
+- Forwarding deshabilitado
 
-**Web**:
-- Considerar HTTPS con Let's Encrypt (gratuito)
+**Recomendaciones adicionales**:
+- Considerar autenticación por clave pública
+- Implementar fail2ban para protección contra fuerza bruta
+- Limitar intentos de login
+- Monitorizar logs de autenticación
 
 ### 11.4 Logs del Sistema
 
@@ -581,8 +683,13 @@ cat /etc/passwd | grep -E '(usuarios_ftp|bin/false)'
 Apache: /var/log/apache2/
 MySQL: /var/log/mysql/
 DNS: /var/log/syslog (Bind9)
-FTP: /var/log/vsftpd.log
+SSH/SFTP: /var/log/auth.log
 Syslog: /var/log/syslog
+```
+
+**Monitorizar accesos SFTP**:
+```bash
+tail -f /var/log/auth.log | grep sftp
 ```
 
 **Rotación**: Configurar logrotate para evitar llenar disco
@@ -598,14 +705,16 @@ Syslog: /var/log/syslog
 - ✓ Conectividad de red (DMZ e Intranet)
 - ✓ Errores en logs del sistema
 - ✓ Conectividad W-N04 → B-N04
+- ✓ Logs de autenticación SFTP
 
 ### 12.2 Chequeos Semanales
 
 - ✓ Realizar backups de BBDD
-- ✓ Revisar permisos de usuarios FTP
-- ✓ Validación de certificados SSL (días restantes)
+- ✓ Revisar usuarios y permisos SFTP
+- ✓ Validar configuración SSH
 - ✓ Actualización de sistema (apt update)
 - ✓ Revisar logs de conexiones MySQL
+- ✓ Verificar espacio en directorios SFTP
 
 ### 12.3 Métricas Clave
 
@@ -615,6 +724,7 @@ Syslog: /var/log/syslog
 - Memoria: Debe estar < 85%
 - Disco: Debe estar < 90%
 - Conexiones MySQL: < 100 simultáneas
+- Sesiones SFTP simultáneas: < 50
 - Ancho de banda DMZ-Intranet: Según SLA
 
 ### 12.4 Herramientas Recomendadas
@@ -623,6 +733,7 @@ Syslog: /var/log/syslog
 - **Alertas**: AlertManager
 - **Logs centralizados**: ELK Stack
 - **Gestión**: Ansible para automatización
+- **Seguridad SSH**: fail2ban
 
 ---
 
@@ -669,6 +780,7 @@ named-checkzone grup4.com /etc/bind/db.grup4.com
 # Hacer queries
 dig @192.168.40.1 web.grup4.com
 nslookup bd.grup4.com 192.168.40.1
+nslookup ftp.grup4.com 192.168.40.1
 ```
 
 **Solución**:
@@ -724,30 +836,64 @@ ping 192.168.140.20
 - Verificar firewall entre DMZ e Intranet
 - Verificar rutas de IP entre R-N04 (debe enrutar DMZ → Intranet)
 
-### 13.5 FTP usuarios no pueden conectar
+### 13.5 SFTP usuarios no pueden conectar
 
-**Síntomas**: Conexión denegada, timeout
+**Síntomas**: Conexión denegada, timeout, error de autenticación
 
 **Diagnóstico**:
 ```bash
-# Estado vsftpd
-systemctl status vsftpd
+# Estado SSH
+systemctl status ssh
 
-# Usuario existe
-id usuario_ftp
+# Verificar puerto
+ss -tlnp | grep 2222
 
-# Revisiones en directorio home
-ls -la /home/usuario_ftp
+# Usuario existe y está en grupo correcto
+id usuario_sftp
+getent group sftpusers
 
-# Probar conexión con lftp
-lftp -u usuario ftps://192.168.40.30
+# Permisos del home
+ls -la /home/usuario_sftp
+
+# Logs de autenticación
+tail -f /var/log/auth.log
+
+# Probar conexión
+sftp -P 2222 usuario@192.168.40.30
 ```
 
 **Solución**:
-- Usuario debe existir en el sistema
-- Shell debe ser /bin/false (sin login)
-- Permisos del home: usuario debe ser propietario
-- Puerto 21 debe estar abierto
+- Usuario debe existir en el sistema y grupo sftpusers
+- Shell debe ser /bin/false (sin login SSH)
+- Permisos del home: root:root con 755
+- Directorio uploads: usuario:sftpusers con 755
+- Puerto 2222 debe estar abierto en firewall
+- Verificar configuración en /etc/ssh/sshd_config
+- Reiniciar servicio: `systemctl restart ssh`
+
+### 13.6 SFTP modo pasivo no funciona
+
+**Síntomas**: Conexión establecida pero no se pueden listar directorios o transferir archivos
+
+**Diagnóstico**:
+```bash
+# Verificar configuración de puertos pasivos
+grep -i passive /etc/ssh/sshd_config
+
+# Verificar firewall
+iptables -L -n | grep 40000
+iptables -L -n | grep 50000
+
+# Logs del cliente
+# Usar cliente SFTP en modo verbose
+sftp -vvv -P 2222 usuario@192.168.40.30
+```
+
+**Solución**:
+- Verificar PassivePorts configurado correctamente
+- Abrir rango de puertos 40000-50000 en firewall
+- Reiniciar SSH: `systemctl restart ssh`
+- En cliente, configurar modo pasivo si es necesario
 
 ---
 
@@ -775,8 +921,8 @@ B-N04:
   Dumps SQL: mysqldump
 
 F-N04:
-  /etc/vsftpd.conf
-  /etc/ssl/private/vsftpd.pem
+  /etc/ssh/sshd_config (Configuración SSH/SFTP)
+  /etc/ssh/ssh_host_* (Claves del servidor)
   /home/* (Datos de usuarios)
 ```
 
@@ -796,6 +942,18 @@ F-N04:
 2. Restaurar desde último backup: `mysql crud_db < backup.sql`
 3. Verificar usuarios MySQL
 4. Reiniciar Apache
+
+**Si se compromete servidor SFTP**:
+
+1. Detener servicio: `systemctl stop ssh`
+2. Restaurar configuración desde backup
+3. Regenerar claves del servidor si necesario:
+   ```bash
+   rm /etc/ssh/ssh_host_*
+   dpkg-reconfigure openssh-server
+   ```
+4. Revisar usuarios y permisos
+5. Reiniciar servicio: `systemctl start ssh`
 
 ### 14.3 Cambios de Configuración
 
@@ -827,17 +985,22 @@ named-checkconf -z
 
 # DHCP
 dhclient -v eth0         # Solicitar DHCP
-lease details
 
 # MySQL
 mysql -u root -p
-SHOW SLAVE STATUS;
 SHOW PROCESSLIST;
 
 # Apache
 apache2ctl -S            # Virtual hosts
 apache2ctl -M            # Módulos cargados
 systemctl reload apache2 # Sin desconectar
+
+# SSH/SFTP
+sftp -P 2222 usuario@servidor
+ssh -p 2222 -v usuario@servidor  # Verbose
+tail -f /var/log/auth.log
+who
+w
 
 # Sistema
 df -h                    # Espacio disco
@@ -853,13 +1016,13 @@ sysctl -a | grep         # Parámetros kernel
 **Equipo de Infraestructura - Grupo 04**
 
 - **Soporte Técnico**: soporte@grup4.com
-- **Emergencias**: número-de-empresa
+- **Emergencias**: +34-XXX-XXX-XXXX
 - **Horario**: Lunes a Viernes, 8:00 - 20:00 h
 - **Escalación**: Coordinador Técnico
 
 ---
 
 **Manual de Administración - Infraestructura Multicapa Grupo 04**  
-*Documento controlado - Versión 1.0*  
+*Documento controlado - Versión 1.1*  
 *© 2025 Grupo 04. Todos los derechos reservados.*  
 *Acceso restringido a personal administrativo autorizado.*

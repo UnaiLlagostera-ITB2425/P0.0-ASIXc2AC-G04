@@ -1,8 +1,10 @@
 # Manual de Usuarios
 
+## Infraestructura Multicapa - Grupo 04
+
 **Versión:** 1.0  
 **Fecha:** Noviembre 2025  
-**Destinatarios:** Usuarios finales (clientes)
+**Destinatarios:** Usuarios finales
 
 ---
 
@@ -17,11 +19,11 @@
    - 5.2 [Cómo acceder](#52-cómo-acceder)
    - 5.3 [Navegación por el Portal](#53-navegación-por-el-portal)
    - 5.4 [Consulta de Equipamientos Educativos](#54-consulta-de-equipamientos-educativos)
-6. [Acceso al Servidor FTP](#6-acceso-al-servidor-ftp)
-   - 6.1 [¿Qué es el Servidor FTP?](#61-qué-es-el-servidor-ftp)
-   - 6.2 [Clientes FTP Recomendados](#62-clientes-ftp-recomendados)
+6. [Acceso al Servidor SFTP](#6-acceso-al-servidor-sftp)
+   - 6.1 [¿Qué es el Servidor SFTP?](#61-qué-es-el-servidor-sftp)
+   - 6.2 [Clientes SFTP Recomendados](#62-clientes-sftp-recomendados)
    - 6.3 [Instalación de FileZilla](#63-instalación-de-filezilla)
-   - 6.4 [Conexión al Servidor FTP](#64-conexión-al-servidor-ftp)
+   - 6.4 [Conexión al Servidor SFTP](#64-conexión-al-servidor-sftp)
    - 6.5 [Subir Archivos](#65-subir-archivos)
    - 6.6 [Descargar Archivos](#66-descargar-archivos)
 7. [Preguntas Frecuentes (FAQ)](#7-preguntas-frecuentes-faq)
@@ -37,7 +39,7 @@ Bienvenido al sistema de Infraestructura Multicapa del Grupo 04. Este manual est
 El sistema proporciona dos servicios principales:
 
 - **Portal Web**: Para consultar información sobre equipamientos educativos.
-- **Servidor FTP**: Para transferir archivos de forma segura.
+- **Servidor SFTP**: Para transferir archivos de forma segura.
 
 Este documento le guiará paso a paso en el uso de ambos servicios.
 
@@ -51,12 +53,12 @@ Para utilizar los servicios del sistema, necesita:
 
 - **Conexión a Internet**: Conexión estable a la red local.
 - **Navegador Web**: Cualquier navegador moderno actualizado (Chrome, Firefox, Edge, Safari).
-- **Cliente FTP** *(solo para acceso a FTP)*: Se recomienda FileZilla (gratuito).
+- **Cliente SFTP** *(solo para acceso a SFTP)*: Se recomienda FileZilla o WinSCP (gratuitos).
 
 ### Credenciales de Acceso
 
 - **Portal Web**: No requiere autenticación, acceso público.
-- **Servidor FTP**: Requiere usuario y contraseña proporcionados por el administrador del sistema.
+- **Servidor SFTP**: Requiere usuario y contraseña proporcionados por el administrador del sistema.
 
 ---
 
@@ -70,7 +72,7 @@ El sistema está construido sobre una infraestructura de red robusta y segura:
 
 - **Base de Datos Segura**: Toda la información que consulta en el portal web está almacenada en una **base de datos protegida y cifrada**. Sus datos están seguros en todo momento.
 
-- **Conexiones Cifradas**: Todas las comunicaciones entre su dispositivo y nuestros servicios están protegidas mediante **cifrado SSL/TLS**, garantizando la privacidad y seguridad de sus datos.
+- **Conexiones Cifradas**: Todas las comunicaciones entre su dispositivo y nuestros servicios están protegidas mediante **cifrado SSH/SSL**, garantizando la privacidad y seguridad de sus datos.
 
 > **En resumen**: El sistema está diseñado pensando en su seguridad. Puede usar los servicios con confianza.
 
@@ -83,7 +85,7 @@ El sistema ofrece los siguientes servicios:
 | Servicio | Dirección de Acceso | Descripción |
 |----------|---------------------|-------------|
 | **Portal Web** | `www.grup4.com` | Consulta de equipamientos educativos de Barcelona |
-| **Servidor FTP** | `ftp.grup4.com` | Transferencia segura de archivos (subida y descarga) |
+| **Servidor SFTP** | `ftp.grup4.com` (puerto 2222) | Transferencia segura de archivos mediante SSH |
 
 ---
 
@@ -137,11 +139,17 @@ La información se presenta de manera clara y organizada. Puede:
 
 ---
 
-## 6. Acceso al Servidor FTP
+## 6. Acceso al Servidor SFTP
 
-### 6.1 ¿Qué es el Servidor FTP?
+### 6.1 ¿Qué es el Servidor SFTP?
 
-El servidor FTP (File Transfer Protocol) le permite transferir archivos entre su ordenador y el servidor de forma segura. Las conexiones están cifradas mediante **FTPS** (FTP Seguro) para proteger sus datos.
+El servidor SFTP (SSH File Transfer Protocol) le permite transferir archivos entre su ordenador y el servidor de forma segura. SFTP utiliza el protocolo **SSH** para cifrar todas las comunicaciones, proporcionando máxima seguridad.
+
+**Ventajas de SFTP:**
+- Todo el tráfico está cifrado (credenciales, datos)
+- Mayor seguridad que FTP tradicional
+- Compatible con autenticación por clave pública
+- Un solo puerto (2222 en este caso)
 
 **Usos principales:**
 
@@ -149,9 +157,9 @@ El servidor FTP (File Transfer Protocol) le permite transferir archivos entre su
 - Descargar archivos desde el servidor
 - Gestionar sus archivos personales
 
-### 6.2 Clientes FTP Recomendados
+### 6.2 Clientes SFTP Recomendados
 
-Para conectarse al servidor FTP necesita un programa cliente. Recomendamos:
+Para conectarse al servidor SFTP necesita un programa cliente. Recomendamos:
 
 | Cliente | Sistema Operativo | Descarga |
 |---------|-------------------|----------|
@@ -171,7 +179,7 @@ Para conectarse al servidor FTP necesita un programa cliente. Recomendamos:
 
 **Paso 4:** Una vez instalado, abra FileZilla desde el menú de aplicaciones.
 
-### 6.4 Conexión al Servidor FTP
+### 6.4 Conexión al Servidor SFTP
 
 Una vez que tenga FileZilla instalado y sus credenciales de acceso, siga estos pasos:
 
@@ -179,16 +187,17 @@ Una vez que tenga FileZilla instalado y sus credenciales de acceso, siga estos p
 
 **Paso 2:** En la parte superior de la ventana, complete los siguientes campos:
 
-- **Servidor**: `ftp.grup4.com`
+- **Servidor**: `ftp.grup4.com` (o `192.168.40.30`)
 - **Nombre de usuario**: *Su usuario proporcionado por el administrador*
 - **Contraseña**: *Su contraseña proporcionada por el administrador*
-- **Puerto**: `21`
+- **Puerto**: `2222`
 
 **Paso 3:** Haga clic en el botón **"Conexión rápida"**.
 
-**Paso 4:** Si es su primera conexión, aparecerá una ventana sobre el certificado SSL:
+**Paso 4:** Si es su primera conexión, aparecerá una ventana de certificado SSH:
 
-- Marque la casilla **"Confiar siempre en este certificado en futuras sesiones"**
+- Lea la huella digital del servidor
+- Marque la casilla **"Confiar siempre en este servidor"**
 - Haga clic en **"Aceptar"**
 
 **Paso 5:** Una vez conectado correctamente, verá:
@@ -210,7 +219,7 @@ Para subir archivos desde su ordenador al servidor:
 
 También puede hacer clic derecho sobre el archivo y seleccionar **"Subir"**.
 
-**Paso 4:** El archivo se transferirá automáticamente. Verá el progreso en la parte inferior de la ventana.
+**Paso 4:** El archivo se transferirá automáticamente de forma cifrada. Verá el progreso en la parte inferior de la ventana.
 
 ### 6.6 Descargar Archivos
 
@@ -224,7 +233,7 @@ Para descargar archivos desde el servidor a su ordenador:
 
 También puede hacer clic derecho sobre el archivo y seleccionar **"Descargar"**.
 
-**Paso 4:** El archivo se descargará automáticamente a su ordenador.
+**Paso 4:** El archivo se descargará automáticamente a su ordenador de forma segura.
 
 ---
 
@@ -238,13 +247,13 @@ No, el portal web es de acceso público y no requiere registro ni autenticación
 
 No, el portal está diseñado únicamente para consulta. Solo los administradores pueden modificar la información.
 
-### ¿Cómo obtengo credenciales para el servidor FTP?
+### ¿Cómo obtengo credenciales para el servidor SFTP?
 
-Las credenciales de acceso FTP son proporcionadas por el administrador del sistema. Contacte con soporte si aún no las ha recibido.
+Las credenciales de acceso SFTP son proporcionadas por el administrador del sistema. Contacte con soporte si aún no las ha recibido.
 
-### ¿Es seguro el servidor FTP?
+### ¿Es seguro el servidor SFTP?
 
-Sí, el servidor utiliza **FTPS** (FTP Seguro) con cifrado SSL/TLS para proteger sus datos durante la transferencia.
+Sí, el servidor utiliza **SFTP sobre SSH** con cifrado completo para proteger sus datos durante la transferencia. Es mucho más seguro que FTP tradicional.
 
 ### ¿Cómo recibo automáticamente mi dirección de red?
 
@@ -254,15 +263,19 @@ La red utiliza un servicio **DHCP** que asigna automáticamente direcciones IP a
 
 Todos los datos que consulta en el portal web están almacenados en una **base de datos protegida y cifrada**. Sus datos están seguros en todo momento gracias a nuestras medidas de seguridad.
 
-### ¿Puedo acceder al FTP desde mi navegador web?
+### ¿Puedo acceder al SFTP desde mi navegador web?
 
-No es recomendable. Debe utilizar un cliente FTP como FileZilla para aprovechar todas las funcionalidades y seguridad del sistema.
+No es recomendable. Debe utilizar un cliente SFTP como FileZilla o WinSCP para aprovechar todas las funcionalidades y seguridad del sistema.
+
+### ¿Por qué el puerto es 2222 y no 22?
+
+El puerto 2222 es un puerto personalizado para mayor seguridad. Asegúrese de usar siempre el puerto **2222** al conectarse.
 
 ### ¿Hay límite de tamaño para los archivos que puedo subir?
 
 Consulte con el administrador del sistema sobre las políticas de uso y límites de almacenamiento.
 
-### ¿Puedo compartir mi carpeta FTP con otros usuarios?
+### ¿Puedo compartir mi carpeta SFTP con otros usuarios?
 
 Cada usuario tiene acceso únicamente a su propia carpeta. No debe compartir sus credenciales con otras personas.
 
@@ -281,25 +294,25 @@ Cada usuario tiene acceso únicamente a su propia carpeta. No debe compartir sus
 - Limpie la caché y cookies de su navegador
 - Contacte con el administrador del sistema
 
-### No puedo conectarme al servidor FTP
+### No puedo conectarme al servidor SFTP
 
 **Problema**: FileZilla muestra un error de conexión.
 
 **Soluciones**:
 - Verifique que sus credenciales (usuario y contraseña) sean correctas
-- Compruebe que el servidor sea: `ftp.grup4.com`
-- Asegúrese de que el puerto sea: `21`
+- Compruebe que el servidor sea: `ftp.grup4.com` o `192.168.40.30`
+- **Asegúrese de que el puerto sea: `2222`** (muy importante)
 - Verifique su conexión a Internet
 - Desactive temporalmente el firewall o antivirus para comprobar si está bloqueando la conexión
 - Contacte con el administrador del sistema
 
-### El certificado SSL del FTP no es confiable
+### El certificado SSH del SFTP no es confiable
 
-**Problema**: Aparece una advertencia sobre el certificado SSL.
+**Problema**: Aparece una advertencia sobre la clave del servidor SSH.
 
 **Solución**:
 - Esto es normal en la primera conexión
-- Marque la opción **"Confiar siempre en este certificado"**
+- Marque la opción **"Confiar siempre en este servidor"**
 - Haga clic en **"Aceptar"** para continuar
 
 ### La transferencia de archivos es muy lenta
@@ -312,12 +325,12 @@ Cada usuario tiene acceso únicamente a su propia carpeta. No debe compartir sus
 - Cierre otros programas que estén usando la conexión
 - Intente más tarde si el servidor está saturado
 
-### Se desconecta automáticamente del FTP
+### Se desconecta automáticamente del SFTP
 
 **Problema**: FileZilla se desconecta después de unos minutos sin actividad.
 
 **Solución**:
-- Esto es una medida de seguridad automática del servidor
+- Esto es una medida de seguridad automática del servidor SSH
 - Simplemente vuelva a conectarse haciendo clic en **"Conexión rápida"**
 - En FileZilla, vaya a **Editar > Ajustes > Conexión** y configure el tiempo de espera
 
@@ -336,7 +349,7 @@ Al contactar con soporte, incluya la siguiente información:
 
 - Descripción detallada del problema
 - Capturas de pantalla (si es posible)
-- Servicio afectado (Portal Web o FTP)
+- Servicio afectado (Portal Web o SFTP)
 - Mensajes de error que aparezcan
 
 ---
@@ -350,5 +363,5 @@ Este manual ha sido diseñado para facilitar el uso de los servicios del sistema
 ---
 
 **Manual de Usuarios - Infraestructura Multicapa Grupo 04**  
-*Documento controlado - Versión 1.0*  
+*Documento controlado - Versión 1.1*  
 *© 2025 Grupo 04. Todos los derechos reservados.*
