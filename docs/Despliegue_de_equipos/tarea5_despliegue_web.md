@@ -2,6 +2,7 @@
 ---
 
 ## Información del hardwarenetwork:
+```bash
   ethernets:
     enp1s0:
       dhcp4: true
@@ -12,7 +13,7 @@
       dhcp4: false
       addresses: [192.168.140.10/24]
   version: 2
-
+```
 
 El hardware utilizado fue preparado mediante isard con las siguientes características:
 
@@ -23,6 +24,7 @@ El hardware utilizado fue preparado mediante isard con las siguientes caracterí
 **Ip del Servidor Web (Apache + PHP):** 192.168.40.10/24
 
 > Netplan:
+
 ```bash
 network:
   ethernets:
