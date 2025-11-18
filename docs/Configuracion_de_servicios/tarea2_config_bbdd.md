@@ -49,7 +49,7 @@ timetable TEXT
 );
 ```
 
-![Creación de la tabla](../media/cano_creacion_tablasBD.png)
+![Creación de la tabla](/media/cano_creacion_tablasBD.png)
 
 ## 2. Estructura y creación de la base de datos
 
@@ -61,7 +61,7 @@ USE crud_db;
 SHOW TABLES;
 ```
 
-![Estructura de base de datos](../media/cano_estructuraBD.png)
+![Estructura de base de datos](/media/cano_estructuraBD.png)
 
 ## 3. Conversión del archivo CSV a UTF-8
 
@@ -83,7 +83,7 @@ sudo systemctl restart mysql
 sudo systemctl status mysql
 ```
 
-![Reinicio y status de MySQL](../media/cano_restart_mysqlBD.png)
+![Reinicio y status de MySQL](/media/cano_restart_mysqlBD.png)
 
 ## 5. Importación del archivo CSV
 
@@ -97,7 +97,7 @@ LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
 ```
 
-![Importación del CSV](../media/cano_importacion_datosBD.png)
+![Importación del CSV](/media/cano_importacion_datosBD.png)
 
 ## 6. Conteo de registros importados
 
@@ -107,7 +107,7 @@ Se comprobó el número total de registros importados para validar el éxito del
 SELECT COUNT(*) FROM equipaments_educacio;
 ```
 
-![Conteo de registros](../media/cano_num_registrosBD.png)
+![Conteo de registros](/media/cano_num_registrosBD.png)
 
 ## 7. Visualización de datos y ejemplos
 
@@ -117,7 +117,7 @@ Se visualizaron algunas filas del contenido importado para verificar que los dat
 SELECT name FROM equipaments_educacio LIMIT 10;
 ```
 
-![Ejemplo de registros importados](../media/cano_ejemplo_datosBD.png)
+![Ejemplo de registros importados](/media/cano_ejemplo_datosBD.png)
 
 ## 8. Backup de la base de datos
 
@@ -128,4 +128,4 @@ mysqldump -u root -p crud_db > backup.sql
 ls | grep backup
 ```
 
-![Backup de la base de datos](../media/cano_backupBD.png)
+![Backup de la base de datos](/media/cano_backupBD.png)

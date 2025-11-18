@@ -1,5 +1,7 @@
 # Manual de Administración
 
+## Infraestructura Multicapa - Grupo 04
+
 **Versión:** 1.0  
 **Fecha:** Noviembre 2025  
 **Destinatarios:** Administradores del Sistema  
@@ -41,23 +43,24 @@ Este manual proporciona la documentación técnica completa para administradores
 La infraestructura está compuesta por **4 servidores virtualizados** utilizando **Isard** como plataforma de virtualización, dividida en **2 subredes principales** para seguridad y gestión de tráfico.
 
 **Subredes Principales**:
-- **Nube de Servidores**: 192.168.40.0/24 (IPs fijas para infraestructura)
-- **Nube de Clientes**: 192.168.140.0/24 (IPs dinámicas vía DHCP)
+- **Nube de Servidores (DMZ)**: 192.168.40.0/24 (IPs fijas para servicios públicos)
+- **Nube Intranet**: 192.168.140.0/24 (IPs dinámicas vía DHCP + Servidor BBDD)
 
 ### 2.2 Componentes Principales
 
-| Servidor | Hostname | IP Fija | Funciones | Sistema Operativo |
-|----------|----------|---------|-----------|-------------------|
-| Router/DHCP/DNS | R-N04 | 192.168.40.1 | Enrutamiento, NAT, DHCP, DNS | Ubuntu Server 22.04 |
-| Servidor Web | W-N04 | 192.168.40.10 | Apache2, PHP, Aplicación Web | Ubuntu Server 22.04 |
-| Base de Datos | B-N04 | 192.168.40.20 | MySQL Server, SSH | Ubuntu Server 22.04 |
-| Servidor FTP | F-N04 | 192.168.40.30 | vsftpd, FTPS (FTP Seguro) | Ubuntu Server 22.04 |
+| Servidor | Hostname | IP Fija | Subred | Funciones | Sistema Operativo |
+|----------|----------|---------|--------|-----------|-------------------|
+| Router/DHCP/DNS | R-N04 | 192.168.40.1 | DMZ | Enrutamiento, NAT, DHCP, DNS | Ubuntu Server 22.04 |
+| Servidor Web | W-N04 | 192.168.40.10 | DMZ | Apache2, PHP, Aplicación Web | Ubuntu Server 22.04 |
+| Base de Datos | B-N04 | 192.168.140.20 | Intranet | MySQL Server, SSH | Ubuntu Server 22.04 |
+| Servidor FTP | F-N04 | 192.168.40.30 | DMZ | vsftpd, FTPS (FTP Seguro) | Ubuntu Server 22.04 |
 
 ### 2.3 Servicios de Red
 
 - **Resolución de Nombres**: DNS (Bind9) en R-N04
 - **Asignación de IPs**: DHCP (isc-dhcp-server) en R-N04
 - **Enrutamiento**: IPTables/NAT en R-N04
+- **Base de Datos**: MySQL Server en B-N04 (accesible desde Intranet)
 - **Acceso Remoto Seguro**: SSH en B-N04
 - **Transferencia Segura**: FTPS en F-N04
 - **Aplicación Web**: PHP + Apache2 en W-N04
@@ -69,32 +72,37 @@ La infraestructura está compuesta por **4 servidores virtualizados** utilizando
 ### 3.1 Segmentación de Red
 
 **DMZ (Zona Desmilitarizada)**: 192.168.40.0/24
-- Contiene servidores públicos (Web, FTP)
+- Contiene servidores públicos (Web, FTP, Router)
 - Accesible desde redes externas para servicios específicos
-- Aislada de la Intranet mediante firewall
+- Aislada de la Intranet mediante firewall controlado
 
-**Intranet (Red Interna)**: 192.168.140.0/24
-- Red privada para clientes y usuarios internos
-- Acceso a Internet controlado mediante NAT
-- Sin acceso directo a la DMZ por defecto
+**Intranet (Red Privada)**: 192.168.140.0/24
+- Red privada para clientes internos y servidor BBDD
+- Acceso a Internet controlado mediante NAT a través de R-N04
+- Base de datos en esta subred para mayor seguridad
 
 ### 3.2 Flujo de Tráfico
 
 1. **Clientes DHCP** en 192.168.140.0/24 reciben IP de R-N04
-2. **Gateway por defecto**: 192.168.40.1 (R-N04)
+2. **Gateway por defecto**: 192.168.40.1 (R-N04) con rutas configuradas
 3. **Servidor DNS**: 192.168.40.1 (primario) + 8.8.8.8 (secundario Google DNS)
 4. **Servicios públicos**: Accesibles vía dominios (www.grup4.com, ftp.grup4.com)
+5. **Servidor BBDD**: Accesible desde W-N04 (192.168.40.10) hacia 192.168.140.20
 
 ### 3.3 Control de Acceso
 
 ```
-Clientes (192.168.140.0/24) 
-    ↓ (DHCP, DNS)
+Clientes Intranet (192.168.140.0/24)
+    ↓ (DHCP, DNS, HTTP)
 R-N04 (Router NAT)
     ↓ (Firewall rules)
     ├→ W-N04 (Puerto 80/443)
     ├→ F-N04 (Puerto 21/990)
-    ├→ B-N04 (Puerto 3306 solo desde W-N04)
+    └→ B-N04 (Puerto 3306 desde W-N04, restringido por firewall)
+    
+W-N04 (Servidor Web en DMZ)
+    ↓ (Conexión remota MySQL)
+B-N04 (Servidor BBDD en Intranet)
 ```
 
 ---
@@ -109,14 +117,14 @@ Todas las máquinas han sido creadas mediante **Isard** con las siguientes carac
 - **vCPU**: 2 cores
 - **RAM**: 2 GB
 - **Almacenamiento**: 20 GB
-- **Interfaces de Red**: 3 (WAN + LAN + DMZ)
+- **Interfaces de Red**: 3 (WAN + DMZ + Intranet)
 - **Sistema Operativo**: Ubuntu Server 22.04 LTS
 
 #### W-N04 (Servidor Web)
 - **vCPU**: 2 cores
 - **RAM**: 2 GB
 - **Almacenamiento**: 30 GB
-- **Interfaces de Red**: 3 (WAN DHCP + Red Servidores + Red Clientes)
+- **Interfaces de Red**: 2 (WAN DHCP + DMZ fija)
 - **Sistema Operativo**: Ubuntu Server 22.04 LTS
 - **Software**: Apache2, PHP, libapache2-mod-php, php-mysql
 
@@ -124,7 +132,7 @@ Todas las máquinas han sido creadas mediante **Isard** con las siguientes carac
 - **vCPU**: 2 cores
 - **RAM**: 3 GB
 - **Almacenamiento**: 40 GB (por base de datos)
-- **Interfaces de Red**: 1 (Red Servidores)
+- **Interfaces de Red**: 1 (Intranet)
 - **Sistema Operativo**: Ubuntu Server 22.04 LTS
 - **Software**: MySQL Server
 
@@ -132,7 +140,7 @@ Todas las máquinas han sido creadas mediante **Isard** con las siguientes carac
 - **vCPU**: 2 cores
 - **RAM**: 2 GB
 - **Almacenamiento**: 50 GB
-- **Interfaces de Red**: 1 (Red Servidores)
+- **Interfaces de Red**: 1 (DMZ)
 - **Sistema Operativo**: Ubuntu Server 22.04 LTS
 - **Software**: vsftpd
 
@@ -147,9 +155,6 @@ network:
     enp2s0:
       dhcp4: false
       addresses: [192.168.40.10/24]
-    enp3s0:
-      dhcp4: false
-      addresses: [192.168.140.10/24]
   version: 2
 ```
 
@@ -168,6 +173,19 @@ network:
   version: 2
 ```
 
+#### Ejemplo B-N04 (Base de Datos en Intranet):
+```yaml
+network:
+  ethernets:
+    enp1s0:
+      dhcp4: false
+      addresses: [192.168.140.20/24]
+      gateway4: 192.168.140.1
+      nameservers:
+        addresses: [192.168.40.1, 8.8.8.8]
+  version: 2
+```
+
 ---
 
 ## 5. Servidor Router (R-N04)
@@ -177,8 +195,8 @@ network:
 El router actúa como el núcleo de la infraestructura proporcionando:
 
 - **Enrutamiento Inter-VLAN**: Comunica las subredes DMZ (40.0/24) e Intranet (140.0/24)
-- **NAT (Network Address Translation)**: Permite a clientes internos acceder a Internet
-- **DHCP**: Asigna IPs dinámicas en la red de clientes (192.168.140.0/24)
+- **NAT (Network Address Translation)**: Permite a clientes y servidores internos acceder a Internet
+- **DHCP**: Asigna IPs dinámicas en la red interna (192.168.140.0/24)
 - **DNS**: Resuelve nombres de dominio internos mediante Bind9
 
 ### 5.2 Configuración de Servicios
@@ -195,7 +213,8 @@ net.ipv4.ip_forward=1
 
 ```
 - POSTROUTING: Enmascara IPs internas como IP del router (enp1s0)
-- FORWARD: Permite tráfico entre interfaces
+- FORWARD: Permite tráfico entre interfaces (DMZ ↔ Intranet controlado)
+- INPUT: Acepta tráfico para servicios locales
 - Persistencia: iptables-persistent guarda las reglas en reinicio
 ```
 
@@ -219,14 +238,14 @@ Lease Time: 600 segundos (10 min default), 7200 max
 **Zonas configuradas**:
 
 - **Directa**: grup4.com (resolve.hosts → IPs)
-- **Inversa**: 40.168.192.in-addr.arpa (resolve IPs → hosts)
+- **Inversa**: 40.168.192.in-addr.arpa y 140.168.192.in-addr.arpa
 
 **Registros principales**:
 
 ```
 router.grup4.com → 192.168.40.1
 web.grup4.com → 192.168.40.10
-bd.grup4.com → 192.168.40.20
+bd.grup4.com → 192.168.140.20
 ftp.grup4.com → 192.168.40.30
 www.grup4.com → 192.168.40.10
 ```
@@ -257,10 +276,11 @@ www.grup4.com → 192.168.40.10
 
 ### 6.3 Archivo db.php (Configuración de BD)
 
-Credenciales y conexión a MySQL:
+Credenciales y conexión a MySQL (remota en Intranet):
 
 ```
-Host: 192.168.40.20 (B-N04)
+Host: 192.168.140.20 (B-N04)
+Puerto: 3306
 Usuario: bchecker
 Contraseña: bchecker121
 Base de Datos: crud_db
@@ -276,7 +296,7 @@ Tabla Principal: equipaments_educacio
 ### 6.4 Aplicación Web (index.php)
 
 **Funcionalidad**:
-- Conexión a base de datos MySQL
+- Conexión remota a base de datos MySQL en Intranet
 - Consulta tabla `equipaments_educacio`
 - Renderización HTML de datos
 - Protección contra XSS (htmlspecialchars)
@@ -292,7 +312,14 @@ Tabla Principal: equipaments_educacio
 
 ## 7. Servidor Base de Datos (B-N04)
 
-### 7.1 Base de Datos Principal
+### 7.1 Ubicación y Red
+
+- **IP**: 192.168.140.20 (Intranet)
+- **Gateway**: 192.168.140.1 (R-N04)
+- **Ubicación física**: Red privada, no en DMZ
+- **Acceso**: Solo desde W-N04 (192.168.40.10) a través de rutas configuradas
+
+### 7.2 Base de Datos Principal
 
 **Nombre**: crud_db
 
@@ -304,14 +331,14 @@ Tabla Principal: equipaments_educacio
 - addresses_* (roadtype, road, neighborhood, district, zip, town, main_address, type)
 - values_* (id, attribute_id, category)
 
-### 7.2 Usuarios MySQL
+### 7.3 Usuarios MySQL
 
 | Usuario | Origen | Contraseña | Permisos | Uso |
 |---------|--------|-----------|----------|-----|
 | bchecker | 192.168.40.10 | bchecker121 | SELECT en crud_db | Aplicación Web |
 | root | localhost | * | Todos | Administración |
 
-### 7.3 Backup y Restore
+### 7.4 Backup y Restore
 
 **Ubicación recomendada**: `/backup/`
 
@@ -325,7 +352,7 @@ mysql -u root -p crud_db < /backup/crud_db_backup.sql
 
 **Frecuencia recomendada**: Diaria a las 02:00 AM
 
-### 7.4 Monitorización
+### 7.5 Monitorización
 
 Verificar:
 - Espacio en disco: `df -h`
@@ -390,11 +417,13 @@ El directorio home del usuario será su raíz FTP.
 ### 9.1 Flujo de Conexión
 
 ```
-Usuario (navegador) 
+Usuario (navegador en Intranet)
   ↓ HTTP/HTTPS
-W-N04 (Apache2 + PHP)
-  ↓ MySQLi
-B-N04 (MySQL Server)
+W-N04 (Apache2 + PHP en 192.168.40.10)
+  ↓ MySQLi (conexión remota a Intranet)
+R-N04 (Router - NAT entre subredes)
+  ↓ 
+B-N04 (MySQL Server en 192.168.140.20)
   ↓ Datos
 equipaments_educacio
 ```
@@ -410,9 +439,17 @@ Acceso vía dominio: `www.grup4.com` o `http://192.168.40.10`
 Cliente solicita: www.grup4.com
 Router DNS (192.168.40.1) resuelve → 192.168.40.10
 Conexión a Apache2 en W-N04
+PHP solicita bd.grup4.com → 192.168.140.20
 ```
 
-### 9.3 Control de Errores en PHP
+### 9.3 Comunicación DMZ ↔ Intranet
+
+La comunicación entre W-N04 (DMZ) y B-N04 (Intranet) es controlada:
+- Requiere rutas específicas en R-N04
+- Puerto 3306 permitido solo desde 192.168.40.10
+- Firewall debe estar configurado para permitir este tráfico
+
+### 9.4 Control de Errores en PHP
 
 **Configuración en index.php**:
 
@@ -423,7 +460,7 @@ error_reporting(E_ALL);
 
 Muestra errores en desarrollo. En producción, redirigir a archivo de log.
 
-### 9.4 Seguridad de la Aplicación
+### 9.5 Seguridad de la Aplicación
 
 - **Escaping de HTML**: htmlspecialchars() previene XSS
 - **Manejo de NULL**: Operador `??` evita notices
@@ -459,17 +496,17 @@ systemctl {start|stop|restart|status} vsftpd
 
 ```bash
 # Ping entre servidores
-ping 192.168.40.1    # Router
-ping 192.168.40.10   # Web
-ping 192.168.40.20   # BBDD
-ping 192.168.40.30   # FTP
+ping 192.168.40.1    # Router (DMZ)
+ping 192.168.40.10   # Web (DMZ)
+ping 192.168.140.20  # BBDD (Intranet)
+ping 192.168.40.30   # FTP (DMZ)
 
 # Resolución DNS
-nslookup web.grup4.com 192.168.40.1
+nslookup bd.grup4.com 192.168.40.1
 dig @192.168.40.1 www.grup4.com
 
-# Conexión a bases de datos
-mysql -h 192.168.40.20 -u bchecker -p -e "SELECT 1"
+# Conexión a bases de datos desde W-N04
+mysql -h 192.168.140.20 -u bchecker -p -e "SELECT 1"
 
 # Puertos abiertos
 netstat -tlnp | grep LISTEN
@@ -510,13 +547,14 @@ cat /etc/passwd | grep -E '(usuarios_ftp|bin/false)'
    - Puerto 80 (HTTP): Abierto a público
    - Puerto 443 (HTTPS): Abierto a público
    - Puerto 21/990 (FTP/FTPS): Restringido a IPs autorizadas
-   - Puerto 3306 (MySQL): SOLO desde 192.168.40.10
+   - Puerto 3306 (MySQL): NUNCA directamente desde DMZ
 
 2. **Intranet (192.168.140.0/24)**:
    - Salida a Internet: Permitida (NAT)
+   - Acceso desde DMZ: Controlado (solo W-N04 → BBDD en puerto 3306)
    - Acceso a DMZ: Controlado
-   - Acceso a BBDD: DENEGADO
    - SSH: Solo desde interfaces administrativas
+   - MySQL: Solo escucha en 0.0.0.0 pero firewall restringe
 
 ### 11.2 Configuración de Contraseñas
 
@@ -557,8 +595,9 @@ Syslog: /var/log/syslog
 
 - ✓ Espacio en disco en todos los servidores
 - ✓ Servicios activos y funcionando
-- ✓ Conectividad de red
+- ✓ Conectividad de red (DMZ e Intranet)
 - ✓ Errores en logs del sistema
+- ✓ Conectividad W-N04 → B-N04
 
 ### 12.2 Chequeos Semanales
 
@@ -566,6 +605,7 @@ Syslog: /var/log/syslog
 - ✓ Revisar permisos de usuarios FTP
 - ✓ Validación de certificados SSL (días restantes)
 - ✓ Actualización de sistema (apt update)
+- ✓ Revisar logs de conexiones MySQL
 
 ### 12.3 Métricas Clave
 
@@ -575,7 +615,7 @@ Syslog: /var/log/syslog
 - Memoria: Debe estar < 85%
 - Disco: Debe estar < 90%
 - Conexiones MySQL: < 100 simultáneas
-- Ancho de banda: Según SLA
+- Ancho de banda DMZ-Intranet: Según SLA
 
 ### 12.4 Herramientas Recomendadas
 
@@ -588,9 +628,9 @@ Syslog: /var/log/syslog
 
 ## 13. Troubleshooting Avanzado
 
-### 13.1 Router no enruta tráfico
+### 13.1 Router no enruta tráfico DMZ-Intranet
 
-**Síntomas**: Clientes no pueden acceder a servidores
+**Síntomas**: W-N04 no puede conectar con B-N04
 
 **Diagnóstico**:
 ```bash
@@ -600,8 +640,9 @@ ip addr show
 # Verificar rutas
 ip route show
 
-# Verificar iptables
+# Verificar iptables (DMZ ↔ Intranet)
 iptables -t nat -L -v
+iptables -t filter -L -v
 
 # Verificar ip_forward
 cat /proc/sys/net/ipv4/ip_forward
@@ -609,7 +650,7 @@ cat /proc/sys/net/ipv4/ip_forward
 
 **Solución**:
 - Habilitar ip_forward: `echo 1 > /proc/sys/net/ipv4/ip_forward`
-- Verificar sintaxis de iptables
+- Verificar sintaxis de iptables para inter-VLAN
 - Reiniciar networking: `systemctl restart networking`
 
 ### 13.2 DNS no resuelve
@@ -627,7 +668,7 @@ named-checkzone grup4.com /etc/bind/db.grup4.com
 
 # Hacer queries
 dig @192.168.40.1 web.grup4.com
-nslookup www.grup4.com 192.168.40.1
+nslookup bd.grup4.com 192.168.40.1
 ```
 
 **Solución**:
@@ -637,7 +678,7 @@ nslookup www.grup4.com 192.168.40.1
 
 ### 13.3 DHCP no asigna IPs
 
-**Síntomas**: Clientes no reciben IP automática
+**Síntomas**: Clientes no reciben IP automática en Intranet
 
 **Diagnóstico**:
 ```bash
@@ -652,31 +693,36 @@ dhcpd -t -cf /etc/dhcp/dhcpd.conf
 ```
 
 **Solución**:
-- Verificar que interfaz en `/etc/default/isc-dhcp-server` es correcta
-- Comprobar que rango está en la subred correcta
+- Verificar que interfaz en `/etc/default/isc-dhcp-server` es enp3s0
+- Comprobar que rango está en 192.168.140.0/24
 - Revisar archivos lease: `/var/lib/dhcp/`
 
 ### 13.4 Conexión Web a BBDD falla
 
-**Síntomas**: Error "Conexión fallida" en index.php
+**Síntomas**: Error "Conexión fallida" en index.php, W-N04 no puede alcanzar B-N04
 
 **Diagnóstico**:
 ```bash
 # Desde W-N04, probar conexión:
-mysql -h 192.168.40.20 -u bchecker -p
+mysql -h 192.168.140.20 -u bchecker -p
 
 # Ver procesos MySQL activos
-mysql -h 192.168.40.20 -u root -p -e "SHOW PROCESSLIST;"
+mysql -h 192.168.140.20 -u root -p -e "SHOW PROCESSLIST;"
 
 # Revisar logs MySQL
 tail -f /var/log/mysql/error.log
+
+# Verificar routing desde W-N04
+ip route show
+ping 192.168.140.20
 ```
 
 **Solución**:
-- Verificar que bchecker@192.168.40.10 está creado
-- Comprobar bind-address = 0.0.0.0 en MySQL
+- Verificar que bchecker@192.168.40.10 está creado en MySQL
+- Comprobar bind-address = 0.0.0.0 en MySQL (/etc/mysql/mysql.conf.d/mysqld.cnf)
 - Reiniciar MySQL: `systemctl restart mysql`
-- Verificar firewall entre servidores
+- Verificar firewall entre DMZ e Intranet
+- Verificar rutas de IP entre R-N04 (debe enrutar DMZ → Intranet)
 
 ### 13.5 FTP usuarios no pueden conectar
 
@@ -809,6 +855,7 @@ sysctl -a | grep         # Parámetros kernel
 - **Soporte Técnico**: soporte@grup4.com
 - **Emergencias**: número-de-empresa
 - **Horario**: Lunes a Viernes, 8:00 - 20:00 h
+- **Escalación**: Coordinador Técnico
 
 ---
 

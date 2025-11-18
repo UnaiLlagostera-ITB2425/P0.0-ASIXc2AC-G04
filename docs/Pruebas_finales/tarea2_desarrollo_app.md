@@ -10,7 +10,7 @@ Este archivo establece la conexión entre PHP y MySQL usando MySQLi, manejando c
 
 ```php
 <?php
-$host = '192.168.40.20';
+$host = '192.168.140.20';
 $user = 'bchecker';
 $pass = 'bchecker121';
 $db   = 'crud_db';
@@ -31,7 +31,7 @@ $conn->set_charset("utf8");
 
 ##### 1. Variables de Configuración
 ```php
-$host = '192.168.40.20';
+$host = '192.168.140.20';
 $user = 'bchecker';
 $pass = 'bchecker121';
 $db   = 'crud_db';

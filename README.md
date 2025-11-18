@@ -16,7 +16,7 @@
 ## Configuración de servicios
 
 - [Tarea 1: Configuración del servidor DNS](docs/Configuracion_de_servicios/tarea1_config_dns.md)
-- [Tarea 2: Configuración del servidor BBDD y importación de datos](Despliegue_de_equipos/tarea2_config_bbdd.md)
+- [Tarea 2: Configuración del servidor BBDD y importación de datos](docs/Configuracion_de_servicios/tarea2_config_bbdd.md)
 - [Tarea 3: Configuración del servidor Web](docs/Configuracion_de_servicios/tarea3_config_web.md)
 - [Tarea 4: Configuración del servidor FTP](docs/Configuracion_de_servicios/tarea4_config_ftp.md)
 - [Tarea 5: Configuración del servidor Router/DHCP](docs/Configuracion_de_servicios/tarea5_config_router.md)
