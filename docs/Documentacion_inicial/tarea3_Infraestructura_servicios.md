@@ -38,7 +38,6 @@ Gestión centralizada de archivos e información.
 | **Base de Datos** | `MySQL` | La "M" del stack LAMP. Es la base de datos relacional más optimizada para correr sobre sistemas de archivos Linux (ext4/xfs). | **SQL Server**: Descartado por ser un producto de Microsoft con costes de licencia y diseñado para Windows. |
 
 ---
----
 
 # Detalle y Comparativa de Servicios
 
