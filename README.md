@@ -4,15 +4,15 @@
 
 - [Tarea 1: Organización del equipo y preparación inicial](docs/Documentacion_inicial/tarea1_organizacion_inicial.md)
 - [Tarea 2: Diseño de la arquitectura y topología de red](docs/Documentacion_inicial/tarea2_diseño_solucion.md)
-- [Tarea 3: Diseño de la arquitectura y topología de red](docs/Documentacion_inicial/tarea3_Infraestructura_servicios.md)
+- [Tarea 3: Técnica de Infraestructura y Servicios](docs/Documentacion_inicial/tarea3_Infraestructura_servicios.md)
 
 ## Despliegue de servicios
 
-- [Tarea 3: Despliegue del servidor Router/DHCP](docs/Despliegue_de_equipos/tarea3_despliegue_router.md)
-- [Tarea 4: Despliegue del servidor DNS](docs/Despliegue_de_equipos/tarea4_despliegue_dns.md)
-- [Tarea 5: Despliegue del servidor Web](docs/Despliegue_de_equipos/tarea5_despliegue_web.md)
-- [Tarea 6: Despliegue del servidor FTP](docs/Despliegue_de_equipos/tarea6.md)
-- [Tarea 7: Despliegue del servidor BBDD](docs/Despliegue_de_equipos/tarea7_despliegue_bbdd.md)
+- [Tarea 1: Despliegue del servidor Router/DHCP](docs/Despliegue_de_equipos/tarea1_despliegue_router.md)
+- [Tarea 2: Despliegue del servidor DNS](docs/Despliegue_de_equipos/tarea2_despliegue_dns.md)
+- [Tarea 3: Despliegue del servidor Web](docs/Despliegue_de_equipos/tarea3_despliegue_web.md)
+- [Tarea 4: Despliegue del servidor FTP](docs/Despliegue_de_equipos/tarea4.md)
+- [Tarea 5: Despliegue del servidor BBDD](docs/Despliegue_de_equipos/tarea5_despliegue_bbdd.md)
 
 ## Configuración de servicios
 
