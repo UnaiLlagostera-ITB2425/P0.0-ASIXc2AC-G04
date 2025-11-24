@@ -88,7 +88,7 @@ web     IN      A       192.168.40.10
 ```
 
 <div align="center">
-  <img src="/media/zona_directa_capture.png" alt="Diseno de Red">
+  <img src="../../media/zona_directa_capture.png" alt="Diseno de Red">
 </div>
 
 - Modificar el número de Serial cada vez que se edite el archivo.
@@ -134,7 +134,7 @@ sudo named-checkzone 40.168.192.in-addr.arpa /etc/bind/db.192.168.40
 ```
 
 <div align="center">
-  <img src="/media/checkzones_capture.png" alt="Puerto servicio DHCP">
+  <img src="../../media/checkzones_capture.png" alt="Puerto servicio DHCP">
 </div>
 
 Corregir cualquier error reportado antes de reiniciar el servicio.
@@ -154,7 +154,7 @@ Verificar resolución DNS efectiva:
 - Consulta directa:
 
 <div align="center">
-  <img src="/media/dig_directo_router_capture.png" alt="Consulta directa router">
+  <img src="../../media/dig_directo_router_capture.png" alt="Consulta directa router">
 </div>
 
 ```bash
@@ -164,7 +164,7 @@ dig @192.168.40.1 router.grup4.com
 ---
 
 <div align="center">
-  <img src="/media/dig_directo_web_capture.png" alt="Consulta directa web">
+  <img src="../../media/dig_directo_web_capture.png" alt="Consulta directa web">
 </div>
 
 ```bash
@@ -175,7 +175,7 @@ dig @192.168.40.1 web.grup4.com
 - Consulta inversa:
 
 <div align="center">
-  <img src="/media/dig_inverso_capture.png" alt="Consulta inversa DNS">
+  <img src="../../media/dig_inverso_capture.png" alt="Consulta inversa DNS">
 </div>
 
 ```bash
