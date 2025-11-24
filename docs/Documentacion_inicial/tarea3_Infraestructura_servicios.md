@@ -1,4 +1,4 @@
-# 📄 Documentación Técnica de Infraestructura y Servicios
+# Documentación Técnica de Infraestructura y Servicios
 
 ## 1. Contexto de la Infraestructura
 El sistema se basa en una arquitectura cliente-servidor diseñada para la estabilidad y seguridad.
@@ -40,15 +40,15 @@ Gestión centralizada de archivos e información.
 ---
 ---
 
-# 🔍 Detalle y Comparativa de Servicios
+# Detalle y Comparativa de Servicios
 
 Este documento detalla la arquitectura de servicios implementada en nuestros servidores Linux, justificando cada elección técnica mediante una comparación directa con sus competidores más habituales en el mercado.
 
-## 1. 🏗️ Infraestructura Base
-* **Servidores:** 100% Linux (Debian/Ubuntu/CentOS).
+## 1. Infraestructura Base
+* **Servidores:** 100% Linux (Ubuntu).
 * **Clientes:** Entorno mixto (1 Estación Linux, 1 Estación Windows).
 
-## 2. 🌐 Servidor Router (Gateway)
+## 2. Servidor Router (Gateway)
 Encargado de la gestión de red, asignación de IPs y seguridad perimetral.
 
 ### A. DHCP (Asignación de IPs)
@@ -75,7 +75,7 @@ Encargado de la gestión de red, asignación de IPs y seguridad perimetral.
 | **vs. ufw / firewalld** | Son "front-ends" simplificados. Los descartamos porque ocultan la complejidad necesaria para hacer un NAT preciso. Usamos `iptables` puro para tener control absoluto sobre las tablas NAT y FILTER. |
 | **vs. nftables** | `nftables` es el sucesor moderno. Sin embargo, la sintaxis de `iptables` sigue siendo el estándar universal. Elegimos `iptables` por madurez y compatibilidad con scripts existentes. |
 
-## 3. 💻 Servidor Web
+## 3. Servidor Web
 Encargado del alojamiento de aplicaciones.
 
 ### A. Servidor HTTP
@@ -94,7 +94,7 @@ Encargado del alojamiento de aplicaciones.
 | **vs. Python (Django)** | Python requiere un servidor de aplicaciones adicional (Gunicorn). `PHP` se comunica directamente con Apache mediante módulos, haciendo el despliegue tan simple como copiar y pegar archivos. |
 | **vs. Java (JSP)** | Java requiere compilar código y reiniciar servicios. `PHP` es interpretado al vuelo, lo que acelera los ciclos de desarrollo. |
 
-## 4. 💾 Servidor de Datos
+## 4. Servidor de Datos
 
 ### A. Transferencia de Archivos
 **Servicio elegido:** `SFTP` (SSH File Transfer Protocol)
