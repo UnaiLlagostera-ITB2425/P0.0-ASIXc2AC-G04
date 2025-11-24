@@ -11,7 +11,7 @@
 - [Tarea 1: Despliegue del servidor Router/DHCP](docs/Despliegue_de_equipos/tarea1_despliegue_router.md)
 - [Tarea 2: Despliegue del servidor DNS](docs/Despliegue_de_equipos/tarea2_despliegue_dns.md)
 - [Tarea 3: Despliegue del servidor Web](docs/Despliegue_de_equipos/tarea3_despliegue_web.md)
-- [Tarea 4: Despliegue del servidor FTP](docs/Despliegue_de_equipos/tarea4.md)
+- [Tarea 4: Despliegue del servidor FTP](docs/Despliegue_de_equipos/tarea4_despliegue_ftp.md)
 - [Tarea 5: Despliegue del servidor BBDD](docs/Despliegue_de_equipos/tarea5_despliegue_bbdd.md)
 
 ## Configuración de servicios
