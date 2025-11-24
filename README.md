@@ -4,6 +4,7 @@
 
 - [Tarea 1: Organización del equipo y preparación inicial](docs/Documentacion_inicial/tarea1_organizacion_inicial.md)
 - [Tarea 2: Diseño de la arquitectura y topología de red](docs/Documentacion_inicial/tarea2_diseño_solucion.md)
+- [Tarea 3: Diseño de la arquitectura y topología de red](docs/Documentacion_inicial/tarea3_Infraestructura_servicios.md)
 
 ## Despliegue de servicios
 
