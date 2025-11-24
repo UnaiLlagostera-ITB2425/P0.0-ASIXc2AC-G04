@@ -45,7 +45,7 @@ Gestión centralizada de archivos e información.
 Este documento detalla la arquitectura de servicios implementada en nuestros servidores Linux, justificando cada elección técnica mediante una comparación directa con sus competidores más habituales en el mercado.
 
 ## 1. Infraestructura Base
-* **Servidores:** 100% Linux (Ubuntu).
+* **Servidores:** 100% Linux (Ubuntu/Debian).
 * **Clientes:** Entorno mixto (1 Estación Linux, 1 Estación Windows).
 
 ## 2. Servidor Router (Gateway)
@@ -56,7 +56,7 @@ Encargado de la gestión de red, asignación de IPs y seguridad perimetral.
 
 | Comparativa | ¿Por qué elegimos `isc-dhcp-server`? |
 | :--- | :--- |
-| **vs. dnsmasq** | `dnsmasq` es ligero y combina DNS/DHCP, ideal para routers domésticos. `isc-dhcp-server` es una solución empresarial dedicada. Lo elegimos porque permite una gestión mucho más estricta de pools y reservas que `dnsmasq` no maneja con tanta solvencia. |
+| **vs. dnsmasq** | (Descartado en tabla principal). `dnsmasq` es ligero y combina DNS/DHCP, ideal para routers domésticos. `isc-dhcp-server` es una solución empresarial dedicada. Lo elegimos porque permite una gestión mucho más estricta de pools y reservas. |
 | **vs. Kea DHCP** | `Kea` es el sucesor moderno. Aunque es más rápido, `isc-dhcp-server` tiene décadas de documentación y estabilidad probada. Priorizamos la estabilidad y la cantidad de guías disponibles. |
 
 ### B. DNS (Resolución de Nombres)
@@ -64,16 +64,16 @@ Encargado de la gestión de red, asignación de IPs y seguridad perimetral.
 
 | Comparativa | ¿Por qué elegimos `bind9`? |
 | :--- | :--- |
-| **vs. Unbound** | `Unbound` es excelente como *resolver* (caché), pero `bind9` es el rey de los servidores **autoritativos**. Necesitamos `bind9` para definir nuestras propias zonas locales (`miempresa.lan`) y que todos los clientes las resuelvan correctamente. |
-| **vs. Windows DNS** | Al no usar Windows Server, ahorramos el coste de la licencia. `bind9` es el estándar de Internet y ofrece mayor flexibilidad en la configuración de zonas. |
+| **vs. Windows DNS** | (Descartado en tabla principal). Al no usar Windows Server, ahorramos el coste de la licencia. `bind9` es el estándar de Internet, nativo de Linux y ofrece mayor flexibilidad en la configuración de zonas. |
+| **vs. Unbound** | `Unbound` es excelente como *resolver* (caché), pero `bind9` es superior como servidor **autoritativo**. Necesitamos `bind9` para definir y controlar nuestras propias zonas locales (`miempresa.lan`). |
 
 ### C. NAT & Firewall
 **Servicio elegido:** `iptables`
 
 | Comparativa | ¿Por qué elegimos `iptables`? |
 | :--- | :--- |
-| **vs. ufw / firewalld** | Son "front-ends" simplificados. Los descartamos porque ocultan la complejidad necesaria para hacer un NAT preciso. Usamos `iptables` puro para tener control absoluto sobre las tablas NAT y FILTER. |
-| **vs. nftables** | `nftables` es el sucesor moderno. Sin embargo, la sintaxis de `iptables` sigue siendo el estándar universal. Elegimos `iptables` por madurez y compatibilidad con scripts existentes. |
+| **vs. Firewalls de Hardware** | (Descartado en tabla principal). Dispositivos como Cisco o Fortinet son excelentes pero costosos. `iptables` ofrece capacidades de firewall de nivel empresarial integradas gratuitamente en el kernel de Linux. |
+| **vs. ufw / firewalld** | Son "interfaces simplificadas". Los descartamos porque ocultan la complejidad necesaria para hacer un NAT preciso. Usamos `iptables` puro para tener control absoluto y directo sobre el tráfico. |
 
 ## 3. Servidor Web
 Encargado del alojamiento de aplicaciones.
@@ -83,16 +83,16 @@ Encargado del alojamiento de aplicaciones.
 
 | Comparativa | ¿Por qué elegimos `Apache`? |
 | :--- | :--- |
-| **vs. Nginx** | `Nginx` es más rápido con contenido estático. Elegimos `Apache` por su flexibilidad con los archivos `.htaccess`. Esto permite cambiar la configuración de cada carpeta sin reiniciar el servidor, vital en entornos de desarrollo. |
-| **vs. IIS** | IIS es exclusivo de Windows. Al usar servidores Linux, Apache es la opción nativa que ofrece mejor rendimiento y seguridad sin costes. |
+| **vs. IIS** | (Descartado en tabla principal). IIS es exclusivo de Windows. Al usar servidores Linux, Apache es la opción nativa que ofrece mejor rendimiento, seguridad y compatibilidad con el stack LAMP sin costes de licencia. |
+| **vs. Nginx** | `Nginx` es más rápido con contenido estático. Elegimos `Apache` por su compatibilidad con archivos `.htaccess`, lo que permite configurar redirecciones y permisos por carpeta de forma dinámica y sencilla. |
 
 ### B. Lenguaje Backend
 **Servicio elegido:** `PHP`
 
 | Comparativa | ¿Por qué elegimos `PHP`? |
 | :--- | :--- |
-| **vs. Python (Django)** | Python requiere un servidor de aplicaciones adicional (Gunicorn). `PHP` se comunica directamente con Apache mediante módulos, haciendo el despliegue tan simple como copiar y pegar archivos. |
-| **vs. Java (JSP)** | Java requiere compilar código y reiniciar servicios. `PHP` es interpretado al vuelo, lo que acelera los ciclos de desarrollo. |
+| **vs. ASP.NET** | (Descartado en tabla principal). Tecnología de Microsoft. Requiere servidores Windows o configuraciones complejas en Linux (.NET Core). `PHP` es nativo de Linux y se integra de forma inmediata con Apache. |
+| **vs. Python (Django)** | Python requiere servidores de aplicaciones adicionales (Gunicorn). `PHP` se comunica directamente con Apache mediante módulos, haciendo el despliegue tan simple como copiar y pegar archivos. |
 
 ## 4. Servidor de Datos
 
@@ -101,15 +101,13 @@ Encargado del alojamiento de aplicaciones.
 
 | Comparativa | ¿Por qué elegimos `SFTP`? |
 | :--- | :--- |
-| **vs. FTP** | **FTP es inseguro** (texto plano). SFTP cifra toda la conexión desde el inicio. |
-| **vs. Samba (SMB)** | Samba es ideal para redes locales Windows pero "ruidoso" y complejo de asegurar en Internet. SFTP funciona igual de bien en local y remoto usando un solo puerto (22). |
-
-> **Nota para el cliente Windows:** Solo requiere instalar un cliente gratuito como *WinSCP* o *FileZilla*.
+| **vs. Samba (SMB)** | (Descartado en tabla principal). Samba es ideal para compartir carpetas en LAN Windows, pero es inseguro exponerlo a Internet. `SFTP` es seguro por diseño (cifrado) y funciona perfectamente tanto en local como en remoto. |
+| **vs. FTP** | **FTP es inseguro** ya que transmite contraseñas en texto plano. `SFTP` utiliza el protocolo SSH, garantizando que todos los datos viajan encriptados, cumpliendo estándares de seguridad actuales. |
 
 ### B. Base de Datos
 **Servicio elegido:** `MySQL`
 
 | Comparativa | ¿Por qué elegimos `MySQL`? |
 | :--- | :--- |
-| **vs. PostgreSQL** | Postgres es técnicamente avanzado, pero `MySQL` es más rápido en operaciones de lectura simple (comunes en webs) y es el motor por defecto de la mayoría de CMS. |
-| **vs. SQLite** | SQLite no soporta múltiples usuarios escribiendo a la vez eficientemente. Necesitamos la capacidad concurrente de un servidor real como `MySQL`. |
+| **vs. SQL Server** | (Descartado en tabla principal). Producto de Microsoft costoso y optimizado para Windows. `MySQL` es Open Source, nativo de Linux y el estándar de la industria para aplicaciones web. |
+| **vs. PostgreSQL** | Postgres es técnicamente avanzado en estándares SQL, pero `MySQL` suele ser más rápido en operaciones de lectura simple (comunes en webs) y tiene una curva de aprendizaje más suave para administración básica. |
