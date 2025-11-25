@@ -36,7 +36,10 @@ force_local_logins_ssl=YES
 ssl_sslv2=NO
 ssl_sslv3=NO
 ```
-![Configuración SSL/TLS](/media/cano_confFTP2.png)
+<div align="center">
+  <img src="../../media/cano_confFTP2.png" alt="Configuración SSL/TLS">
+</div>
+
 ![Usuarios y permisos](/media/cano_confFTP1.png)
 
 
@@ -101,6 +104,7 @@ El listado y las operaciones con archivos funcionaron perfectamente.
 
 ## Conclusión:
 El acceso SFTP funciona correctamente con el usuario local y el nuevo puerto 2222, ofreciendo seguridad, funcionalidad completa y evitando todos los problemas experimentados con FTPS y FTP tradicional.
+
 
 
 
