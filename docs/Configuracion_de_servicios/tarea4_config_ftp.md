@@ -40,8 +40,9 @@ ssl_sslv3=NO
   <img src="../../media/cano_confFTP2.png" alt="Configuración SSL/TLS">
 </div>
 
-![Usuarios y permisos](/media/cano_confFTP1.png)
-
+<div align="center">
+  <img src="../../media/cano_confFTP1.png" alt="Usuarios y permisos">
+</div>
 
 ## 3. Reinicio y activación del servicio
 
@@ -51,8 +52,9 @@ sudo systemctl restart vsftpd
 sudo systemctl enable vsftpd
 sudo systemctl status vsftpd
 ```
-
-![Reinicio y estado correcto del servicio](/media/cano_restart_statusFTP.png)
+<div align="center">
+  <img src="../../media/cano_restart_statusFTP.png" alt="Reinicio y estado correcto del servicio">
+</div>
 
 ## 4. Prueba de conexión FTPS
 
@@ -104,6 +106,7 @@ El listado y las operaciones con archivos funcionaron perfectamente.
 
 ## Conclusión:
 El acceso SFTP funciona correctamente con el usuario local y el nuevo puerto 2222, ofreciendo seguridad, funcionalidad completa y evitando todos los problemas experimentados con FTPS y FTP tradicional.
+
 
 
 
