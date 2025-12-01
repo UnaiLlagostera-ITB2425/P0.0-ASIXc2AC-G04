@@ -13,7 +13,7 @@ El servicio DNS es un componente crítico que permite resolver nombres de domini
 </div>
 
 <div align="center">
-<a href="https://igulms.iqdigit.com/storage/15584/Domain-Name-System-(DNS)-in-Application-Layer---GeeksforGeeks.pdf">Fuente: Domain Name System (DNS) in Application Layer</a>
+<a href="https://igulms.iqdigit.com/storage/15584/Domain-Name-System-(DNS)-in-Application-Layer---GeeksforGeeks.pdf">Domain Name System (DNS) in Application Layer</a>
 </div>
 
 ---
