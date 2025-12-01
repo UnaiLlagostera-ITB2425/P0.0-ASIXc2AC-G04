@@ -12,6 +12,10 @@ El servicio DNS es un componente crítico que permite resolver nombres de domini
   <img src="/media/dns_how_works.gif" alt="Como funciona el DNS">
 </div>
 
+<div align="center">
+<a href="https://igulms.iqdigit.com/storage/15584/Domain-Name-System-(DNS)-in-Application-Layer---GeeksforGeeks.pdf">Fuente: Domain Name System (DNS) in Application Layer</a>
+</div>
+
 ---
 
 El servidor R-N04, con su sistema operativo y hardware preconfigurados, debe contar con conectividad de red estable, capacidad de acceso remoto seguro y respaldo configurado antes de iniciar la instalación del servidor DNS.
