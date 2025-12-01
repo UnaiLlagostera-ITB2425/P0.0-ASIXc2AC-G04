@@ -49,7 +49,9 @@ timetable TEXT
 );
 ```
 
-![Creación de la tabla](/media/cano_creacion_tablasBD.png)
+<div align="center">
+  <img src="../../media/cano_creacion_tablasBD.png" alt="Creación de la tabla">
+</div>
 
 ## 2. Estructura y creación de la base de datos
 
@@ -61,7 +63,9 @@ USE crud_db;
 SHOW TABLES;
 ```
 
-![Estructura de base de datos](/media/cano_estructuraBD.png)
+<div align="center">
+  <img src="../../media/cano_estructuraBD.png" alt="Estructura de base de datos">
+</div>
 
 ## 3. Conversión del archivo CSV a UTF-8
 
@@ -72,7 +76,9 @@ iconv -f UTF-16LE -t UTF-8 opendatabcn_llista-equipaments_educacio-csv.csv -o op
 ls
 ```
 
-![Conversión a UTF-8](../media/cano_cambio_datos_uft8BD.png)
+<div align="center">
+  <img src="../../media/cano_cambio_datos_uft8BD.png" alt="Conversión a UTF-8">
+</div>
 
 ## 4. Gestión y reinicio del servicio MySQL
 
@@ -83,7 +89,9 @@ sudo systemctl restart mysql
 sudo systemctl status mysql
 ```
 
-![Reinicio y status de MySQL](/media/cano_restart_mysqlBD.png)
+<div align="center">
+  <img src="../../media/cano_restart_mysqlBD.png" alt="Reinicio y status de MySQL">
+</div>
 
 ## 5. Importación del archivo CSV
 
@@ -97,7 +105,9 @@ LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
 ```
 
-![Importación del CSV](/media/cano_importacion_datosBD.png)
+<div align="center">
+  <img src="../../media/cano_importacion_datosBD.png" alt="Importación del CSV">
+</div>
 
 ## 6. Conteo de registros importados
 
@@ -107,7 +117,9 @@ Se comprobó el número total de registros importados para validar el éxito del
 SELECT COUNT(*) FROM equipaments_educacio;
 ```
 
-![Conteo de registros](/media/cano_num_registrosBD.png)
+<div align="center">
+  <img src="../../media/cano_num_registrosBD.png" alt="Conteo de registros">
+</div>
 
 ## 7. Visualización de datos y ejemplos
 
@@ -117,7 +129,9 @@ Se visualizaron algunas filas del contenido importado para verificar que los dat
 SELECT name FROM equipaments_educacio LIMIT 10;
 ```
 
-![Ejemplo de registros importados](/media/cano_ejemplo_datosBD.png)
+<div align="center">
+  <img src="../../media/cano_ejemplo_datosBD.png" alt="Ejemplo de registros importados">
+</div>
 
 ## 8. Backup de la base de datos
 
@@ -128,4 +142,7 @@ mysqldump -u root -p crud_db > backup.sql
 ls | grep backup
 ```
 
-![Backup de la base de datos](/media/cano_backupBD.png)
+<div align="center">
+  <img src="../../media/cano_backupBD.png" alt="Backup de la base de datos">
+</div>
+![](/)

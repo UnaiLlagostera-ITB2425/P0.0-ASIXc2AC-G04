@@ -9,7 +9,7 @@ Este documento describe la configuración y despliegue inicial del servicio DNS,
 El servicio DNS es un componente crítico que permite resolver nombres de dominio internos en direcciones IP, facilitando la gestión y acceso a los recursos de red. Este manual detalla las etapas iniciales necesarias para el despliegue del servicio DNS, asegurando su correcta instalación y preparación para las configuraciones avanzadas posteriores.
 
 <div align="center">
-  <img src="/media/dns_how_works.gif" alt="Como funciona el DNS">
+  <img src="../../media/dns_how_works.gif" alt="Como funciona el DNS">
 </div>
 
 <div align="center">

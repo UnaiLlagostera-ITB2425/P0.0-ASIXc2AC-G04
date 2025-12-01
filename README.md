@@ -21,14 +21,11 @@
 - [Tarea 3: Configuración del servidor Web](docs/Configuracion_de_servicios/tarea3_config_web.md)
 - [Tarea 4: Configuración del servidor FTP](docs/Configuracion_de_servicios/tarea4_config_ftp.md)
 - [Tarea 5: Configuración del servidor Router/DHCP](docs/Configuracion_de_servicios/tarea5_config_router.md)
-- [Tarea 6: Pruebas preliminares de servicios](docs/Configuracion_de_servicios/tarea6_resumen_pruebas.md)
 
 ## Pruebas finales y manuales
 
 - [Tarea 1: Despliegue e integración de clientes](docs/Pruebas_finales/tarea1_despliegue_clientes.md)
 - [Tarea 2: Desarrollo de la aplicación de consulta de datos](docs/Pruebas_finales/tarea2_desarrollo_app.md)
-- [Tarea 3: Pruebas integradas de toda la infraestructura](docs/Pruebas_finales/tarea3_prueba_infraestructura.md)
-- Tarea 4: Documentación final y entrega
 
 ---
 
@@ -39,5 +36,3 @@
 ---
 
 > Todos los sistemas (y aplicaciones) tienen U:bchecker/Pw:bchecker121.
-
-> Si la tarea no está linkeada es debido a que hemos decidido que no se ha de documentar o no és relevante.

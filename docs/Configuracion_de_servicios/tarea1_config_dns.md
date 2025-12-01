@@ -116,7 +116,7 @@ $TTL    604800
 ```
 
 <div align="center">
-  <img src="/media/zona_inversa_capture.png" alt="Diseno de Red">
+  <img src="../../media/zona_inversa_capture.png" alt="Diseno de Red">
 </div>
 
 - Crear registros PTR para cada IP que requiera resolución inversa.

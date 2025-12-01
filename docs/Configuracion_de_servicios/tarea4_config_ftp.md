@@ -7,8 +7,10 @@ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048
 -keyout /etc/ssl/private/vsftpd.pem
 -out /etc/ssl/private/vsftpd.pem
 ```
-![Generación del certificado](/media/cano_creacion_certFTP.png)
 
+<div align="center">
+  <img src="../../media/cano_creacion_certFTP.png" alt="Generación del certificado">
+</div>
 
 ## 2. Configuración del archivo `/etc/vsftpd.conf`
 
@@ -87,7 +89,9 @@ Tras los problemas con FTPS, se decidió probar el acceso SFTP, que utiliza el p
 Cambios en la configuración:
 Se editó el archivo /etc/ssh/sshd_config para cambiar el puerto predeterminado (22) al puerto 2222:
 
-![Configuración puerto SSH/SFTP](/media/cano_conf_port_SFTP.png)
+<div align="center">
+  <img src="../../media/cano_conf_port_SFTP.png" alt="Reinicio y estado correcto del servicio">
+</div>
 
 Se recargó el servicio SSH para aplicar los cambios:
 
@@ -102,7 +106,9 @@ sftp -P 2222 bchecker@192.168.40.30
 ```
 El listado y las operaciones con archivos funcionaron perfectamente.
 
-![Conexión y prueba SFTP correcta](/media/cano_connectSFTP.png)
+<div align="center">
+  <img src="../../media/cano_connectSFTP.png" alt="Conexión y prueba SFTP correcta">
+</div>
 
 ## Conclusión:
 El acceso SFTP funciona correctamente con el usuario local y el nuevo puerto 2222, ofreciendo seguridad, funcionalidad completa y evitando todos los problemas experimentados con FTPS y FTP tradicional.

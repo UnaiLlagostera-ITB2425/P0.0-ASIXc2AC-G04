@@ -5,9 +5,13 @@
 
 El hardware utilizado fue preparado mediante isard con las siguientes características:
 
-![Hardware](../../media/hard_web.png)
+<div align="center">
+  <img src="../../media/hard_web.png" alt="Hardware">
+</div>
 
-![Hardware2](../../media/hard_web2.png)
+<div align="center">
+  <img src="../../media/hard_web2.png" alt="Hardware2">
+</div>
 
 **Ip del Servidor Web (Apache + PHP):** 192.168.40.10/24
 
@@ -52,6 +56,6 @@ Luego abre en el navegador:
 
 `http://192.168.40.10/info.php`
 
-![Acceso web](/media/despl_web.png)
-
-***
+<div align="center">
+  <img src="../../media/despl_web.png" alt="Acceso web">
+</div>

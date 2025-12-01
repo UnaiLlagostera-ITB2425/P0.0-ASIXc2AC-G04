@@ -10,6 +10,10 @@ Este documento describe cómo desplegar máquinas virtuales cliente (Windows y L
 
 Guarda la plantilla y despliega las VMs de alumnos/usuarios a partir de ella.​
 
+<div align="center">
+  <img src="../../media/configuracion_base_clientes.png" alt="Configuración de clientes">
+</div>
+
 El equipo router R-N04 ya ofrece DHCP en 192.168.140.0/24 con gateway 192.168.140.1 y DNS 192.168.40.1 configurados en isc-dhcp-server.
 
 ## 2. Configuración en Clientes Linux
@@ -22,6 +26,15 @@ Editar `/etc/netplan/00-installer-config.yaml`, jecutar:
 ```bash
 ip a
 ```
+
+<div align="center">
+  <img src="../../media/ip_address_cliente.png" alt="Revision de IP cliente">
+</div>
+
+<div align="center">
+  <img src="../../media/ip_info_cliente.png" alt="Revision de IP cliente via gráfica">
+</div>
+
 Debe aparecer una IP del rango `192.168.140.100–150` con máscara /24 y gateway `192.168.140.1`.
 
 ## 3. Configuración en Clientes Windows
@@ -31,6 +44,11 @@ Debe aparecer una IP del rango `192.168.140.100–150` con máscara /24 y gatewa
 - Propiedades de la interfaz ITB4A → Protocolo TCP/IPv4:
   - Obtener IP automáticamente
   - Obtener DNS automáticamente
+
+<div align="center">
+  <img src="../../media/ip_info_windows.png" alt="Revision de IP cliente via gráfica windows">
+</div>
+
  
 ## 4. Verificaciones Finales
 

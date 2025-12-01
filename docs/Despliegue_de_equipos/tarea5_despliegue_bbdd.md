@@ -4,22 +4,26 @@
 
 Para el despliegue del servidor de base de datos en la máquina B-N04, se ha utilizado el paquete oficial de MySQL Server siguiendo la estructura definida por el proyecto.  
 Comando utilizado para la instalación:
-```sql
+```bash
 sudo apt install mysql-server
 ```
 Esto instala el servidor MySQL y todas las dependencias necesarias sobre el sistema operativo Linux, tal como muestra la evidencia:
 
-![Instalación MySQL Server](/media/cano_instalacion_MYSQL.png)
+<div align="center">
+  <img src="../../media/cano_instalacion_MYSQL.png" alt="Instalación MySQL Server">
+</div>
 
 ## Comprobación del estado del servicio
 
 Una vez finalizada la instalación, se ha verificado que el servicio MySQL esté en ejecución y operativo utilizando:
-```sql
+```bash
 sudo systemctl status mysql
 ```
 La comprobación muestra que el servidor está activo y listo para aceptar conexiones:
 
-![Estado MySQL activo](/media/cano_statusBD.png)
+<div align="center">
+  <img src="../../media/cano_statusBD.png" alt="Estado MySQL activo">
+</div>
 
 ## Estado actual
 

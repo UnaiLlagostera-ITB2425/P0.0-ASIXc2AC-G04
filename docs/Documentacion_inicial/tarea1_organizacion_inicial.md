@@ -43,7 +43,9 @@ Establecer la organización del grupo de trabajo y preparar el espacio común de
 - Crea carpetas para cada sprint y para los medios (imágenes, diagramas).
 - Sube el archivo README.md con el resumen del proyecto y los enlaces a los sprints y tareas.
 
-![Estructura recomendada](/media/esquema_github.png)
+<div align="center">
+  <img src="../../media/esquema_github.png" alt="Estructura recomendada">
+</div>
 
 ---
 
@@ -54,7 +56,9 @@ Establecer la organización del grupo de trabajo y preparar el espacio común de
 - Se usan etiquetas y comentarios para seguimiento rápido.
 - El equipo debe actualizar el progreso frecuentemente para mantener la sincronía.
 
-![Backlog](/media/backlog.png)
+<div align="center">
+  <img src="../../media/backlog.png" alt="EBacklog">
+</div>
 
 ---
 
