@@ -36,7 +36,7 @@ La red está dividida en dos subredes principales:
 - Comunicaciones hacia servidores reguladas por reglas de firewall y NAT en el router.
 
 <div align="center">
-  <img src="../../media/DISEÑO RED.png" alt="Diseno de Red">
+  <img src="../../media/DISEÑO RED.png" alt="Diseño de Red">
 </div>
 
 ---
