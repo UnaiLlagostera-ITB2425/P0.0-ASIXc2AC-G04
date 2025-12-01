@@ -23,7 +23,7 @@ Establecer la organización del grupo de trabajo y preparar el espacio común de
   `P0.0-ASIXc2AC-G04`
 
 <div align="center">
-  <img src="/media/create_github.png" alt="Crear repositorio">
+  <img src="../../media/create_github.png" alt="Crear repositorio">
 </div>
 
 - Elige “Public” si todos pueden ver la repo, “Private” si solo el equipo.
@@ -34,7 +34,9 @@ Establecer la organización del grupo de trabajo y preparar el espacio común de
 - En la pestaña de “Settings” → “Collaborators”, podemos invitar al resto del grupo.
 - Cada miembro debe aceptar la invitación para poder subir y modificar archivos.
 
-![Configuración de colaboradores](/media/colab_github.png)
+<div align="center">
+  <img src="../../media/colab_github.png" alt="Configuración de colaboradores">
+</div>
 
 **Estructura inicial del proyecto dentro de GitHub**
 
